@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Proof Map · Kervaire126</title>
+  <link rel="stylesheet" href="proof-map.css">
+  <script src="proof-map.js" defer></script>
+</head>
+<body>
+<div id="proof-map">
+  <header class="kp-chrome">
+    <div class="kp-brand"><span class="kp-mark">126</span><span>Kervaire126</span></div>
+    <div class="kp-location">Proof Map</div>
+  </header>
+  <main class="kp-main">
+    <div class="kp-heading">
+      <div class="kp-eyebrow">The structure of the argument</div>
+      <h1>The argument in dimension 126</h1>
+      <p class="kp-question">Does there exist a closed smooth stably framed 126-manifold of Kervaire invariant one?</p>
+      <p class="kp-intro">The invariant takes values in {0, 1}; the goal is to realize the value 1. Browder’s criterion translates this geometric question into a precise survival question in the sphere Adams spectral sequence.</p>
+      <div class="kp-goal-bridge" aria-label="Browder’s criterion connects geometric existence and nonzero Adams survival">
+        <div><span class="kp-goal-label">Geometric goal</span><strong>Kervaire invariant one in dimension 126</strong></div>
+        <div class="kp-bridge-arrow"><span>Browder</span><span aria-hidden="true">⇔</span></div>
+        <div><span class="kp-goal-label">Adams target</span><strong><em>h</em><sub>6</sub><sup>2</sup> survives nontrivially to E<sub>∞</sub></strong><span class="kp-caption">Bidegree (2, 128) · Stem 128 − 2 = 126</span></div>
+      </div>
+      <div class="kp-caption kp-count"></div>
+    </div>
+    <section class="kp-bottleneck" aria-labelledby="kp-bottleneck-title">
+      <div class="kp-bottleneck-heading"><h2 id="kp-bottleneck-title">How computations narrow the argument</h2><a href="../paper/main.tex" target="_top">Proof strategy in the paper · Introduction ↗</a></div>
+      <ol class="kp-reduction">
+        <li><strong>105 candidates</strong><span>Generators in stem 125 that could be differential targets</span></li>
+        <li><strong>Exclude 101</strong><span>Using computations and inductive methods</span></li>
+        <li><strong>One remaining d<sub>12</sub> case</strong><span>Further reduced by propagation and mathematical arguments</span></li>
+        <li><strong>Exclude the last obstruction</strong><span>Main proves that the required detection conditions cannot hold simultaneously</span></li>
+      </ol>
+    </section>
+    <p id="proof-map-loading" class="kp-load-status" role="status">Loading Blueprint dependencies…</p>
+    <noscript>This map requires JavaScript. The chapters remain available in the Blueprint reader.</noscript>
+    <div class="kp-legend">
+      <span><i class="kp-line"></i>Dependencies recorded in the Blueprint</span>
+      <span><i class="kp-line kp-line-active"></i>Computation outputs and their consumers</span>
+      <span class="kp-program-legend"><i class="kp-line kp-line-program"></i>External computation records entering the project</span>
+      <span class="kp-method-legend"><i class="kp-line kp-line-method"></i>Propagation rules from the paper</span>
+    </div>
+    <div class="kp-flow">
+      <svg class="kp-exchanges" aria-hidden="true"><defs>
+        <marker id="kp-arrow-program" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="var(--kp-program)" stroke-width="1.6"></path></marker>
+        <marker id="kp-arrow-method" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="var(--kp-method)" stroke-width="1.6"></path></marker>
+      </defs><g class="kp-program-flow-paths"></g><g class="kp-method-paths"></g><g class="kp-program-paths"></g></svg>
+    <div class="kp-map" aria-label="Mathematical dependencies between the eight Blueprint chapters">
+      <svg class="kp-edges" aria-hidden="true"><defs>
+        <marker id="kp-arrow-neutral" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="var(--kp-edge)" stroke-width="1.4"></path></marker>
+        <marker id="kp-arrow-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M 1 1 L 9 5 L 1 9" fill="none" stroke="var(--kp-accent)" stroke-width="1.4"></path></marker>
+      </defs><g class="kp-paths"></g></svg>
+      <div class="kp-stages"></div>
+    </div>
+    <aside class="kp-external" aria-labelledby="kp-external-title">
+      <div class="kp-external-heading"><div><span>External computations</span><h2 id="kp-external-title">Lin program · SSeqCpp</h2></div><a href="https://github.com/WayneLin92/SSeqCpp" target="_blank" rel="noopener noreferrer">Source ↗</a></div>
+      <section class="kp-program-section" data-program="Adams">
+        <div class="kp-program-name"><span>01</span><h3>Adams</h3></div>
+        <p class="kp-program-purpose">Compute the initial algebraic data</p>
+        <p class="kp-program-output">E₂ bases, products, maps and selected direct d₂</p>
+        <p class="kp-program-target">→ AdamsComputation</p>
+        <details class="kp-program-details"><summary>Inputs and mathematical operations</summary>
+        <dl>
+          <dt>Program inputs</dt><dd>Encoded finite spectra and maps, and Steenrod-algebra data.</dd>
+          <dt>Algebraic data</dt><dd>Sphere generator names and bidegrees, algebraic relations, ordered E₂ bases and dimensions, together with ν-cofiber coordinates and the specified bottom-cell inclusion.</dd>
+          <dt>Computation</dt><dd>Resolutions and Ext computation; some direct d₂ computations also use secondary operations.</dd>
+          <dt>Program outputs</dt><dd>E₂ bases, products, induced maps and four separately specified direct sphere d₂ equations.</dd>
+        </dl>
+        <div class="kp-program-delivery"><span>← Algebraic data on the specified Adams pages</span><strong>AdamsComputation inputs</strong></div>
+        <p class="kp-program-rule">The sphere E₂ coordinates and comparisons are used through internal degree t ≤ 261, and the ν-cofiber coordinates and comparisons through t ≤ 200, where t = filtration s + stable homotopy degree. The four direct d₂ inputs are on S⁰ and are separate from the E₂ algebra.</p>
+        <p class="kp-program-next">↓ E₂ and direct d₂ data pass to ss</p>
+        </details>
+      </section>
+      <section class="kp-program-section" data-program="ss">
+        <div class="kp-program-name"><span>02</span><h3>ss</h3></div>
+        <p class="kp-program-purpose">Combine initial differentials with propagation rules from the paper</p>
+        <p class="kp-program-output">Selected differentials, boundaries, finite-page survival and exclusions</p>
+        <p class="kp-program-target">→ SSComputation</p>
+        <details class="kp-program-details"><summary>Inputs and mathematical operations</summary>
+        <dl>
+          <dt>Program inputs</dt><dd>Adams E₂ data and maps, known initial differentials and applicable propagation rules.</dd>
+          <dt>Mathematical rules</dt><dd>Leibniz, naturality, cofibers, and generalized Leibniz and Mahowald propagation rules.</dd>
+          <dt>Program outputs</dt><dd>Selected differentials, boundaries, finite-page survival and exclusions on the sphere and ν-cofiber. An exclusion asserts that the corresponding differential equation does not hold.</dd>
+        </dl>
+        <div class="kp-program-delivery"><span>← Differential and finite-page inputs</span><strong>SSComputation inputs</strong></div>
+        <details class="kp-program-context">
+          <summary>Seed inputs to the external program in the paper</summary>
+          <p>The appendix specifies three supplied seed differentials: two sphere differentials from the image of J, and d₃(v₂¹⁶) = β⁵g in tmf from a literature power-operation argument. Literature supplies Main’s tmf inputs.</p>
+          <a href="../paper/main.tex" target="_top">Read the appendix ↗</a>
+        </details>
+        <p class="kp-program-rule">The mathematics of these rules is developed in <button type="button" data-select-module="ProofTools">ProofTools ↗</button>.</p>
+        </details>
+      </section>
+    </aside>
+    </div>
+    <footer class="kp-footer">
+      <span>Arrows summarize the cross-chapter mathematical dependencies recorded in the Blueprint.</span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>

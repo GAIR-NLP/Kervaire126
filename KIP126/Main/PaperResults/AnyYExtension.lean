@@ -1,0 +1,144 @@
+module
+
+import all KIP126.Main.SectionSeven.WeakYDetection
+import all KIP126.Main.SectionSeven.AnyYPeeling
+import all KIP126.Main.SectionSeven.NuTargetFull
+
+/-! Change of representatives for AimPaper Corollary 7.18 after lambda multiplication.
+Equal Y labels put the h₀-image of their difference in filtration 15.
+Multiplication by λ² kills this difference in Q9, giving choice independence
+after that multiplication; the unmultiplied equation requires a separate
+argument. The λ⁶ image of a T-detected representative is also independent
+of its choice. -/
+
+@[expose] section
+namespace KIP126.Main.Paper.Internal
+open CategoryTheory CategoryTheory.Limits KIP126.StableHomotopy
+open KIP126.Synthetic.Context KIP126.Synthetic.SpectralSequence KIP126.AdamsSynthetic
+open KIP126.Core.SpectralSequence KIP126.Kervaire.Route KIP126.Literature
+open KIP126.AdamsSynthetic.Completed KIP126.Main.Internal KIP126.Main.Internal.Selected
+open KIP126.ProofTools.Internal KIP126.ProofTools.Internal.Mahowald KIP126.Main.SectionSeven KIP126.Main.SectionSeven.Internal
+open KIP126.Literature.Standard (syntheticH0)
+open KIP126.Computation.Standard (Y T)
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+
+private theorem any_y_h0_detected :
+    Detects (background.convergence .sphere) (1,1,1)
+      (sphereLabel 1 1 0 KIP126.Computation.Standard.h0) syntheticH0 := by
+  have h := background.sphereDetectionCompatible.homotopy_lambda 1 1 0 syntheticH0
+  change Detects (background.convergence .sphere) (1,1,1)
+    (sphereLabel 1 1 0 ((KIP126.Literature.sphereFirstQuotient background) 1 1
+      (quotientClass 1 syntheticH0))) (lambdaMultiply 0 syntheticH0) at h
+  have hh : (KIP126.Literature.sphereFirstQuotient background) 1 1
+      (quotientClass 1 syntheticH0) = KIP126.Computation.Standard.h0 :=
+    KIP126.Literature.Standard.syntheticH0_first_quotient_label
+  rw [hh,lambda_zero_0_1] at h
+  exact h
+
+private theorem any_y_h0_difference_filtration_fifteen
+    (y y' : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (hy : FiniteDetected 9 (by decide) 11 136 4 Y y)
+    (hy' : FiniteDetected 9 (by decide) 11 136 4 Y y') :
+    FiltrationAtLeast background.syntheticTower 15 (sphereAction syntheticH0 (y-y')) := by
+  have hf12 : FiltrationAtLeast background.syntheticTower 12 (y-y') :=
+    detects_sub_filtration (background.convergence (.quotient 9 .sphere)) (11,136,132) hy.1 hy'.1
+  have hf14 := (weak_y_filtration_twelve_fourteen (y-y')).mp hf12
+  exact KIP126.Literature.Standard.action_filtration (.quotient 9 .sphere)
+    0 1 125 132 1 14 syntheticH0 (y-y')
+    (detected_filtration .sphere (1,1,1) any_y_h0_detected) hf14
+
+private theorem any_y_h0_difference_lambda_two_zero
+    (y y' : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (hy : FiniteDetected 9 (by decide) 11 136 4 Y y)
+    (hy' : FiniteDetected 9 (by decide) 11 136 4 Y y') :
+    lambdaMultiply 2 (sphereAction syntheticH0 (y-y'))=0 := by
+  have hf := lambda_filtration_preserved 2 15 _
+    (any_y_h0_difference_filtration_fifteen y y' hy hy')
+  exact sphere_quotient_high_filtration_zero 9 (by decide) 125 131 15 (by decide) _ hf
+
+private theorem any_y_h0_lambda_two_independent
+    (y y' : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (hy : FiniteDetected 9 (by decide) 11 136 4 Y y)
+    (hy' : FiniteDetected 9 (by decide) 11 136 4 Y y') :
+    lambdaMultiply 2 (sphereAction syntheticH0 y)=
+      lambdaMultiply 2 (sphereAction syntheticH0 y') := by
+  have h := any_y_h0_difference_lambda_two_zero y y' hy hy'
+  simpa only [sphereAction,lambdaMultiply,Preadditive.comp_sub,sub_eq_zero] using h
+
+private theorem any_y_target_lambda_six_independent
+    (t t' : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (ht : FiniteDetected 9 (by decide) 14 139 0 T t)
+    (ht' : FiniteDetected 9 (by decide) 14 139 0 T t') :
+    lambdaMultiply 6 t = lambdaMultiply 6 t' := by
+  have hd : FiltrationAtLeast background.syntheticTower 15 (t-t') :=
+    detects_sub_filtration (background.convergence (.quotient 9 .sphere)) (14,139,139) ht.1 ht'.1
+  have hh := anyy_lambda_six_filtration_fifteen_zero (t-t') hd
+  simpa only [lambdaMultiply,Preadditive.comp_sub,sub_eq_zero] using hh
+
+/-- At the specified bidegrees, changing the T representative cannot absorb
+an h0 error: all such representatives have the same lambda-six image.
+Thus the exact extension for another Y representative is equivalent to
+actual annihilation of its difference from the initial representative. -/
+private theorem any_y_exact_extension_iff_difference_zero
+    (y0 y : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (t0 : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (ht0 : FiniteDetected 9 (by decide) 14 139 0 T t0)
+    (he0 : sphereAction syntheticH0 y0 = lambdaMultiply 6 t0)
+    (hn0 : lambdaMultiply 6 t0 ≠ 0) :
+    (∃ t : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9),
+      FiniteDetected 9 (by decide) 14 139 0 T t ∧
+      sphereAction syntheticH0 y = lambdaMultiply 6 t ∧ lambdaMultiply 6 t ≠ 0) ↔
+      sphereAction syntheticH0 (y-y0) = 0 := by
+  have hsub : sphereAction syntheticH0 (y-y0) =
+      sphereAction syntheticH0 y - sphereAction syntheticH0 y0 := by
+    simp only [sphereAction, Preadditive.comp_sub]
+  rw [hsub, sub_eq_zero]
+  constructor
+  · rintro ⟨t, ht, he, _⟩
+    exact he.trans ((any_y_target_lambda_six_independent t t0 ht ht0).trans he0.symm)
+  · intro he
+    exact ⟨t0, ht0, he.trans he0, hn0⟩
+
+/-- Unmultiplied annihilation condition for passage from one bracket
+representative to every representative with the same Y label.
+The lambda-squared comparison below follows from filtration fifteen. -/
+private theorem any_y_universal_extension_iff_difference_zero
+    (y0 : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (t0 : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (ht0 : FiniteDetected 9 (by decide) 14 139 0 T t0)
+    (he0 : sphereAction syntheticH0 y0 = lambdaMultiply 6 t0)
+    (hn0 : lambdaMultiply 6 t0 ≠ 0) :
+    (∀ y : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9),
+      FiniteDetected 9 (by decide) 11 136 4 Y y →
+      ∃ t : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9),
+        FiniteDetected 9 (by decide) 14 139 0 T t ∧
+        sphereAction syntheticH0 y = lambdaMultiply 6 t ∧ lambdaMultiply 6 t ≠ 0) ↔
+    (∀ y : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9),
+      FiniteDetected 9 (by decide) 11 136 4 Y y →
+      sphereAction syntheticH0 (y-y0) = 0) := by
+  constructor
+  · intro h y hy
+    exact (any_y_exact_extension_iff_difference_zero y0 y t0 ht0 he0 hn0).mp (h y hy)
+  · intro h y hy
+    exact (any_y_exact_extension_iff_difference_zero y0 y t0 ht0 he0 hn0).mpr (h y hy)
+
+/-- Lambda-squared propagation of an initial exact equation to every
+Y representative, using the specified Q9 source and target classes. -/
+private theorem any_y_extension_after_lambda_two
+    (hc3 : KIP126.Main.Stem126D6Vanishes)
+    (y0 : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (hy0 : FiniteDetected 9 (by decide) 11 136 4 Y y0)
+    (t : BiHom 125 139 (XModLambdaN (S_0_0:SyntheticSpectrum) 9))
+    (ht : FiniteDetected 9 (by decide) 14 139 0 T t)
+    (he : sphereAction syntheticH0 y0=lambdaMultiply 6 t) :
+    ∀ y : BiHom 125 132 (XModLambdaN (S_0_0:SyntheticSpectrum) 9),
+      FiniteDetected 9 (by decide) 11 136 4 Y y →
+      lambdaMultiply 2 (sphereAction syntheticH0 y)=lambdaMultiply 8 t ∧
+        lambdaMultiply 8 t≠0 := by
+  intro y hy
+  refine ⟨?_,nu_target_lambda_eight_nonzero hc3 t ht⟩
+  rw [any_y_h0_lambda_two_independent y y0 hy hy0,he,lambda_two_six_139]
+
+end
+end KIP126.Main.Paper.Internal

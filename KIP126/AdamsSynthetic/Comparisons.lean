@@ -1,0 +1,57 @@
+module
+
+public import KIP126.AdamsSynthetic.Families
+public import KIP126.AdamsSynthetic.Configuration
+
+/-! Comparisons of the specified E₂ components of the classical and synthetic Adams
+families under ν. -/
+
+@[expose] section
+namespace KIP126.AdamsSynthetic
+
+open CategoryTheory KIP126.StableHomotopy KIP126.Synthetic.Context
+open KIP126.Classical.Adams KIP126.Synthetic.SpectralSequence KIP126.Kervaire.Route
+
+universe u v w
+variable {C : Type u} [StableHomotopyCategory.{u,v} C]
+  [HasFunctorialCofiber (C := C)]
+  {Syn : Type w} [SyntheticCategory.{w,v} Syn]
+  [HasFunctorialCofiber (C := Syn)]
+
+/-- Selected E₂ labels on one pair of systems. The equations bind the
+chosen comparisons to the actual ν, unit isomorphism and λ maps. -/
+public structure E2Comparison
+    (A : ClassicalAdamsFamily C) (F : SyntheticAdamsFamily Syn)
+    (N : NuFunctorData C Syn) (aux : AuxiliaryData C (coefficients := coefficients)) where
+  nuE2 : ∀ (X : AdamsObject) (a s t : ℤ) (k : ℕ),
+    (A.obj (X.obj aux)).Page 2 (s,t) ≃ₗ[ℤ]
+      (F.obj ((SyntheticCategory.biShift (0,a)).obj
+        (N.functor.obj (X.obj aux)))).sequence.Page 2 (s,t,t+a-k)
+  sphereE2 : ∀ (s t : ℤ) (k : ℕ),
+    A.sphere.Page 2 (s,t) ≃ₗ[ℤ] F.sphere.sequence.Page 2 (s,t,t-k)
+  sphere_nu : ∀ (s t : ℤ) (k : ℕ) (x : A.sphere.Page 2 (s,t)),
+    (F.functor.map (SyntheticCategory.biShift_zero.hom.app _ ≫ N.unitIso.hom)).pageMap
+      2 (s,t,t-k) (by simpa only [add_zero, AdamsObject.obj, ClassicalObject.obj, SyntheticAdamsFamily.obj] using nuE2 .sphere 0 s t k x) = sphereE2 s t k x
+  nu_natural : ∀ (X Y : AdamsObject) (f : X.obj aux ⟶ Y.obj aux)
+      (a s t : ℤ) (k : ℕ) (x : (A.obj (X.obj aux)).Page 2 (s,t)),
+    (F.functor.map ((SyntheticCategory.biShift (0,a)).map (N.functor.map f))).pageMap
+      2 (s,t,t+a-k) (nuE2 X a s t k x) =
+      nuE2 Y a s t k ((A.functor.map f).pageMap 2 (s,t) x)
+  nu_lambda : ∀ (X : AdamsObject) (s t : ℤ) (k : ℕ)
+      (x : (A.obj (X.obj aux)).Page 2 (s,t)),
+    HEq ((F.functor.map (SyntheticCategory.lam.app (N.functor.obj (X.obj aux)))).pageMap
+      2 (s,t,t-1-k) (nuE2 X (-1) s t k x))
+      (nuE2 X 0 s t (k+1) x)
+
+/-- Complete short exactness of the mod-two homology maps in every degree,
+including the endpoint conditions used in Pstrągowski Lemma 4.23. -/
+public def HomologyShortExact (H : ModTwoCoefficients C)
+    (T : CategoryTheory.Pretriangulated.Triangle C) : Prop :=
+  ∀ n : ℤ,
+    Function.Injective (inducedMap (MonoidalCategory.whiskerLeft H.object T.mor₁) n) ∧
+    Function.Exact
+      (inducedMap (MonoidalCategory.whiskerLeft H.object T.mor₁) n)
+      (inducedMap (MonoidalCategory.whiskerLeft H.object T.mor₂) n) ∧
+    Function.Surjective (inducedMap (MonoidalCategory.whiskerLeft H.object T.mor₂) n)
+
+end KIP126.AdamsSynthetic

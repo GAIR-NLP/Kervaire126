@@ -1,0 +1,465 @@
+\chapter{Spectral Sequences and Extensions}
+The central result is the nonzero permanent survival of
+$h_6^2\in E_2^{2,128}(S^0)$ in the mod-two Adams spectral sequence
+(Theorem~\ref{paper:1.4}). Browder's comparison then gives a closed stably
+framed manifold of Kervaire invariant one in dimension $126$
+(Theorem~\ref{paper:1.1}). These deductions use the foundational,
+literature and computation inputs stated in the following chapters.
+The comparison hypotheses are given with the respective constructions.
+
+The proof reduces the survival question to a possible differential
+$d_{12}$ on $h_6^2$. Synthetic spectra express its obstruction through
+$\lambda\eta\theta_5^2$, where $\theta_5$ lifts the Kervaire class in
+stem $62$, $\eta$ is the Hopf class, and $\lambda$ is the synthetic
+deformation parameter. Finite $\lambda$ quotients, extension relations
+and the sphere and cofiber computations then exclude that differential.
+The Adams and synthetic framework is introduced next, followed by the
+literature comparisons, the computations and extension tools, and the
+permanence and geometric arguments. This first chapter supplies the
+representative calculus used throughout.
+
+The main calculations use the classical Adams bidegree $(s,t)$, where
+$s$ is filtration and $t-s$ is the stem. This chapter develops the
+representative calculus in an abelian category $C$, with a general
+additive grading. Nested cycle and boundary subobjects give the pages;
+convergence identifies the infinity page with the associated graded of
+a filtered target. Equations between filtered representatives then give
+extension relations, and bounded filtrations give an extension spectral
+sequence.
+
+
+Reaching a page means having a representative there, with zero allowed;
+nonzero survival means having a nonzero representative. Convergence identifies
+$E_\infty$ with the associated graded object, and completeness is specified
+where used. The extension spectral
+sequence below uses bounded filtrations; its interpretation on morphisms
+from a test object also requires that object to be projective.
+
+For a first reading, the essential conventions are common labels and
+nonzero survival (Definitions~\ref{sem:SpectralSequence:representatives}
+and~\ref{sem:SpectralSequence:permanent}), convergence and detection
+(Definition~\ref{sem:SpectralSequence:convergence}), and filtered-map
+extensions (Definition~\ref{sem:SpectralSequence:extension-equation}).
+The remaining representative and indexing calculations can be consulted
+when a later proof invokes them.
+
+\section{Pages, representatives, and functoriality}
+
+To follow a class through several pages, it is useful to work with
+cycle and boundary subobjects of a common ambient object. Successive
+pages then arise by taking larger boundary quotients of smaller cycle
+objects.
+
+\begin{definition}[Spectral sequences with common representatives]
+\label{sem:SpectralSequence:subobject-data}
+\label{sem:SpectralSequence:pre-sequence}
+\label{sem:SpectralSequence:sequence}
+\level{coarse}
+\textit{Cycles and boundaries.} In an abelian category $C$, let $V$ be an object with subobjects
+\[
+ Z_\nu,B_\nu\subseteq V\qquad(\nu\in\mathbb N\cup\{\infty\})
+\]
+such that $Z_\nu$ decreases, $B_\nu$ increases, $Z_0=V$, and $B_\nu\subseteq Z_\nu$ for every $\nu$. Assume that $Z_\infty$ is the greatest lower bound of the finite $Z_n$, and $B_\infty$ the least upper bound of the finite $B_n$. The construction uses these specified bounds in $C$.
+
+For every finite or infinite stage, define the quotient object and its canonical projection by
+\[
+ Q_\nu=\operatorname{coker}(B_\nu\hookrightarrow Z_\nu),
+ \qquad \pi_\nu:Z_\nu\longrightarrow Q_\nu.
+\]
+In particular, $Q_\infty=Z_\infty/B_\infty$ and $Q_0=V/B_0$; we allow $B_0$ to be nonzero.
+
+\textit{Pages and differentials.} Let $\iota$ be an additive abelian grading group and $r_0\in\mathbb Z$ the initial page. For each degree take cycles and boundaries
+\[
+ (V^p,Z_\nu^p,B_\nu^p)\qquad(p\in\iota)
+\]
+as above, together with differential degrees $\delta_r\in\iota$ and maps
+\[
+ d_r^p:E_r^p\longrightarrow E_r^{p+\delta_r}.
+\]
+The page $E_r$ is the quotient at cycle stage
+\[
+ n(r)=\max\{r-r_0,0\}\in\mathbb N,
+ \qquad E_r^p=Q_{n(r)}^p=Z_{n(r)}^p/B_{n(r)}^p.
+\]
+Thus $E_{r_0}^p=V^p/B_0^p$ and each later page advances the cycle
+stage by one. We set $E_r^p=Q_0^p$ for $r<r_0$ as an indexing
+convention. These data form a pre-spectral sequence. For a spectral
+sequence, require
+\[
+ d_r^{p+\delta_r}\circ d_r^p=0
+ \qquad(r\in\mathbb Z,\ p\in\iota).
+\]
+For every $r\geq r_0$, put $n=r-r_0$. The cycles and boundaries on the displayed page must satisfy, as subobjects of $E_r^p$,
+\[
+ \begin{aligned}
+ \ker d_r^p
+   &=\operatorname{im}(Z_{n+1}^p\hookrightarrow Z_n^p
+                          \xrightarrow{\pi_n^p}E_r^p),\\
+ \operatorname{im}d_r^{p-\delta_r}
+   &=\operatorname{im}(B_{n+1}^p\hookrightarrow Z_n^p
+                          \xrightarrow{\pi_n^p}E_r^p).
+ \end{aligned}
+\]
+The indicated maps of cycles and boundaries induce the successor-page identification $E_{r+1}^p\cong H^p(E_r,d_r)$. The infinity page is the quotient $E_\infty^p=Z_\infty^p/B_\infty^p$ from the same underlying data.
+
+\textit{Morphisms.} Between sequences with the same initial page and differential degrees, a morphism $\phi:E\to E'$ is a family $\phi^p:V^p\to V'^p$ preserving $Z_\nu^p$ and $B_\nu^p$ for every finite or infinite $\nu$, whose induced maps on pages satisfy
+\[
+ \phi_r^{p+\delta_r}\circ d_r^p=d_r'^p\circ\phi_r^p.
+\]
+In particular a morphism carries a common representative to a common representative on every page, including $E_\infty$.
+\lean{KIP126.Core.SpectralSequence.SSData,KIP126.Core.SpectralSequence.SSData.page,KIP126.Core.SpectralSequence.SSData.eInfty,KIP126.Core.SpectralSequence.SSData.pageπ,KIP126.Core.SpectralSequence.PreSS,KIP126.Core.SpectralSequence.PreSS.Page,KIP126.Core.SpectralSequence,KIP126.Core.SpectralSequence.SpectralSequenceMorphism,KIP126.Core.SpectralSequence.SpectralSequenceMorphism.pageMap,KIP126.Core.SpectralSequence.SpectralSequenceMorphism.eInftyMap}
+\end{definition}
+
+
+
+
+
+\begin{theorem}[The canonical successor map on cycle representatives]
+\label{sem:SpectralSequence:successor-representative}
+\level{coarse}
+\uses{sem:SpectralSequence:sequence}
+Let $E$ be a spectral sequence in an abelian category, let $r\geq r_0$,
+and fix a degree $p$. Put $n=r-r_0$ and write
+\[
+C=\bigl(E_r^{p-\deg d_r}\xrightarrow{d_r}E_r^p
+\xrightarrow{d_r}E_r^{p+\deg d_r}\bigr).
+\]
+Here $\deg d_r=\delta_r$. Let
+$\sigma:E_{r+1}^p\cong H(C)$ be the canonical successor isomorphism,
+$j:Z_{n+1}^p\to Z_n^p$ the cycle inclusion, and $\pi_r,\pi_{r+1}$ the
+page quotient maps. Let $q:E_r^p\to\operatorname{coker}(d_r^{p-\deg d_r})$
+be the quotient map and let $\iota:H(C)\to\operatorname{coker}(d_r^{p-\deg d_r})$
+be the canonical monomorphism. After the indicated page and degree
+identifications, the same next-cycle representative satisfies
+\[
+\iota\circ\sigma\circ\pi_{r+1}=q\circ\pi_r\circ j.
+\]
+\lean{KIP126.Core.SpectralSequence.pageHomologyIso_representative}
+\end{theorem}
+\begin{proof}
+The cycle and boundary axioms identify the kernel of $d_r^p$ with
+$Z_{n+1}^p/B_n^p$ and its incoming image with
+$B_{n+1}^p/B_n^p$. Quotienting the former by the latter gives
+$Z_{n+1}^p/B_{n+1}^p=E_{r+1}^p$. Both sides of the displayed identity
+therefore send a next-cycle representative to its class modulo the
+incoming image in $E_r^p$.
+\end{proof}
+
+\begin{definition}[Common labels and differential relations]
+\label{sem:SpectralSequence:representatives}
+\label{sem:SpectralSequence:cycles-boundaries}
+\label{sem:SpectralSequence:differential}
+\level{coarse}
+\textit{Common representatives.} For a module-valued spectral sequence, $x\in E_2^p$ represents $x_r\in E_r^p$ if one cycle representative projects to both classes. Reaching $E_r$ means such a representative exists; surviving to $E_r$ additionally requires $x_r\neq0$.
+
+A fixed $E_2$ label has at most one represented class on a specified later page. Spectral-sequence morphisms transport representatives and differential equations through their induced page maps.
+
+\textit{Cycles and incoming boundaries.} A page-$r$ cycle is an element $x_r\in\ker d_r$, and a page-$r$ boundary is an element of $\operatorname{im}d_r$. A second-page label is a boundary by page $r$ if it lifts from the boundary subobject at page $r+1$; it is a final boundary if it lifts from $B_\infty$. An incoming hit on page $r$ is a differential whose represented target is nonzero.
+
+\textit{Labeled differential equations.} For $x\in E_2^p$ and $y\in E_2^q$, the relation $d_r(x)=y$ means that $q=p+\deg(d_r)$ and that there exist classes $x_r,y_r$ represented by $x,y$, respectively, satisfying $d_r(x_r)=y_r$. The differential is nonzero when $y_r\neq0$. Differential vanishing on $x$ means that every page-$r$ class represented by $x$ has zero outgoing differential; this condition also holds when $x$ has no page-$r$ representative.
+
+A nonzero differential gives nonzero representatives of both source and target on its page, hits the specified target, and implies that the actual differential morphism is nonzero.
+
+Suppose $r\geq r_0$ and $d_r(x)=y$ between represented second-page labels in degrees $p$ and $q=p+\deg(d_r)$. The represented page-$r$ target is a cycle. For every $t>r$, the label $y$ represents zero on page $t$.
+\lean{KIP126.Core.SpectralSequence.RepresentsOnPage,KIP126.Core.SpectralSequence.ReachesPage,KIP126.Core.SpectralSequence.SurvivesTo,KIP126.Core.SpectralSequence.IsPageCycle,KIP126.Core.SpectralSequence.IsPageBoundary,KIP126.Core.SpectralSequence.IsBoundaryBy,KIP126.Core.SpectralSequence.IsFinalBoundary,KIP126.Core.SpectralSequence.HitOnPage,KIP126.Core.SpectralSequence.HasDifferential,KIP126.Core.SpectralSequence.HasNonzeroDifferential,KIP126.Core.SpectralSequence.DifferentialVanishesOn}
+\end{definition}
+
+
+\section{Finite-page calculations and permanent cycles}
+
+The following conventions separate three questions: whether a label
+reaches a page, whether its class there is nonzero, and whether it has
+a common representative at infinity. The permanence criteria below combine finite computations with
+stabilization of the cycle and boundary towers at $E_\infty$.
+
+\begin{definition}[Finite windows and permanent cycles]
+\label{sem:SpectralSequence:permanent}
+\level{coarse}
+Let $2\leq a\leq b$. A label is a cycle on the window $[a,b]$ if, for every integer $r$ in this interval, it represents a class $x_r$ with $d_r(x_r)=0$. It survives on this window if it represents a nonzero class on every page in the interval. It is never hit on this window if no page in the interval has a nonzero incoming differential with that represented target.
+
+A permanent cycle is an $E_2$ label with a common representative in $Z_\infty$. Nonzero survival requires that this representative have nonzero image in $E_\infty$. In both cases the infinite-cycle representative projects to the original $E_2$ label.
+
+If all outgoing differentials at a fixed degree vanish from page $N$ onward, its cycle tower stabilizes there. If the corresponding incoming differential morphisms vanish, its boundary tower stabilizes as well. The page $N$ must be at least the initial page.
+
+Let $N\geq r_0$. If a label reaches page $N$ and $d_r$ is zero on its degree for every $r\geq N$, it is a permanent cycle. If it survives nontrivially to $N$ and the incoming differential morphisms are also zero for every $r\geq N$, it has nonzero survival at infinity.
+\lean{KIP126.Core.SpectralSequence.IsPermanentCycle,KIP126.Core.SpectralSequence.NonzeroSurvival}
+\end{definition}
+
+
+\begin{theorem}[Finite-page representative calculus]
+\label{sem:SpectralSequence:representative-expansion}
+\level{coarse}
+\textit{The third page as a differential quotient.} Let $E$ be a module-valued spectral sequence with initial page $r_0\leq2$. A second-page class reaches $E_3$ if and only if it is a $d_2$ cycle. Two represented third-page classes agree if and only if their second-page difference lies in the image of the incoming $d_2$. A second-page label is a boundary by page two if and only if it lies in that image. Every third-page class has a second-page label.
+
+\textit{Calculating from complete representatives.} Let $E$ be a spectral sequence of abelian groups, let $r\geq2$, and suppose $E_2^p\cong(\mathbb F_2)^N$ has basis $b_0,\ldots,b_{N-1}$. Suppose each $b_i$ represents $a_i\in E_r^p$. Then every page-$r$ class is a sum of a subfamily of the $a_i$. If $d_r(a_i)=0$ for every $i$, then $d_r=0$ in degree $p$. More generally, for a $\mathbb Z$-linear isomorphism $e:A\cong(\mathbb F_2)^N$, every $a\in A$ is the sum of the basis vectors whose coordinates under $e$ are nonzero.
+
+\textit{Nonzero representatives on the successor page.} Suppose the same label already has represented classes on page $r$ and on page $r+1$, with $r$ at least two and at least the initial page. The successor-page representative is nonzero if the page-$r$ representative is not an incoming differential target. It is also nonzero if the page-$r$ representative is nonzero and the relevant incoming morphism vanishes.
+
+\textit{Small-dimensional calculations.} Let $E$ be a spectral sequence of abelian groups with $r_0\leq2$.
+\begin{enumerate}
+\item Suppose $E_2^p\cong(\mathbb F_2)^3$ has basis $b_0,b_1,b_2$, $r>2$, $b_1$ represents $a\in E_r^p$, $b_2$ represents zero there, and $d_2(b_0)\neq0$. Then every element of $E_r^p$ is either zero or $a$.
+\item Suppose $E_2^p\cong(\mathbb F_2)^4$ has basis $b_0,b_1,b_2,b_3$, and $E_2^{p+\deg(d_2)}\cong(\mathbb F_2)^2$ has a basis containing $c_0$, with $d_2(b_0)=d_2(b_1)=c_0$ and $d_2(b_2)=d_2(b_3)=0$. If $b_0+b_1,b_2,b_3$ represent $a,b,c\in E_4^p$, respectively, then every element of $E_4^p$ is one of $0,c,b,b+c,a,a+c,a+b,a+b+c$.
+\item For any $r\geq r_0$, if $\ker(d_r:E_r^p\to E_r^{p+\deg(d_r)})=0$, then $E_{r+1}^p=0$.
+\end{enumerate}
+\lean{KIP126.Core.SpectralSequence.FinitePageCalculus.page_eq_sum_of_complete_representatives,KIP126.Core.SpectralSequence.FinitePageCalculus.d_zero_of_complete_representatives,KIP126.Core.SpectralSequence.FinitePageCalculus.finite_basis_expansion}
+\end{theorem}
+\begin{proof}
+\uses{sem:SpectralSequence:representatives,sem:SpectralSequence:differential}
+Use $E_{r+1}=H(E_r,d_r)$. At the third page this is the quotient of the
+$d_2$ kernel by the incoming image. A complete second-page basis expands
+any common cycle representative; projecting the same expansion to page
+$r$ gives the asserted generating family. Nonzero successor classes are
+obtained precisely when their cycle representatives avoid the incoming
+image. In the three- and four-coordinate cases, impose the displayed
+$d_2$ equations on those coordinates and then project to the indicated
+later page. The resulting coordinate lists are exactly the alternatives
+stated above. The final zero-kernel assertion is the successor homology
+quotient with zero cycle group.
+\end{proof}
+
+
+\section{Filtrations, convergence, and detection}
+
+To interpret page calculations in homotopy, we fix a filtration on the
+target. Detection specifies a leading associated graded class; changing
+its representative adds a class in the next filtration step.
+
+\begin{definition}[Filtered objects, boundedness and completeness]
+\label{sem:SpectralSequence:filtration}
+\label{sem:SpectralSequence:completion}
+\level{coarse}
+\textit{Filtrations.} A filtration consists of decreasing subobjects $F^s A^k$. Its associated graded is the cokernel of $F^{s+1}A^k\longrightarrow F^sA^k$, with its canonical quotient map. Filtration-preserving maps induce the corresponding maps on associated graded objects.
+
+A bounded filtration has integers $a_k,b_k$ in each degree such that
+$F^{a_k}A^k=A^k$ and $F^{b_k}A^k=0$. Decreasingness then gives
+$F^sA^k=A^k$ for $s\le a_k$ and $F^sA^k=0$ for $s\ge b_k$.
+In particular the filtration is exhaustive and separated.
+
+\textit{Completeness.} The quotient maps $A^k/F^{s+1}A^k\to A^k/F^sA^k$ form the quotient
+tower, and the projections from $A^k$ form its canonical cone. The
+filtration is complete when this cone is a limit cone, equivalently
+when the canonical comparison
+$A^k\to\varprojlim_s A^k/F^sA^k$ is an isomorphism whenever the limit
+exists. The identification is required to commute with the canonical projections.
+\lean{KIP126.Core.SpectralSequence.Filtration,KIP126.Core.SpectralSequence.Filtration.associatedGraded,KIP126.Core.SpectralSequence.Filtration.toAssociatedGraded,KIP126.Core.SpectralSequence.FilteredMorphism,KIP126.Core.SpectralSequence.FilteredMorphism.inducedGrMap,KIP126.Core.SpectralSequence.Filtration.quotientAt,KIP126.Core.SpectralSequence.Filtration.quotientTransition,KIP126.Core.SpectralSequence.Filtration.quotientTower,KIP126.Core.SpectralSequence.Filtration.quotientTowerCone,KIP126.Core.SpectralSequence.Filtration.CompletionWitness}
+\end{definition}
+
+
+\begin{definition}[Convergence, detection and filtration ambiguity]
+\label{sem:SpectralSequence:convergence}
+\label{sem:SpectralSequence:detection}
+\level{coarse}
+\textit{Convergence.} A spectral sequence converges weakly to a filtered
+object $A$ if there is a bijective reindexing $p\mapsto(s,k)$ and
+isomorphisms
+\[
+ E_\infty^p\cong\operatorname{gr}^{s}A^k.
+\]
+We keep these isomorphisms fixed when discussing detection.
+Completeness and separatedness are specified as additional hypotheses where used.
+
+A map between two such comparisons, with the same reindexing, is a map
+on $E_\infty$ and a filtered map on the targets making the comparison
+square commute.
+
+For a commutative ring $R$, also consider $\mathbb Z^2$-graded spectral
+sequences of $R$-modules with $\mathbb Z$-graded filtered targets. A
+morphism of converging sequences consists of a spectral-sequence map
+together with a filtered target map
+such that the induced $E_\infty$ square commutes. These maps are closed
+under identities and composition.
+
+\textit{Detection.} An infinity-page class detects a filtered representative when its image under the convergence isomorphism is the associated graded class of that representative. The commutative comparison square ensures that maps preserve detection.
+
+Let $T$ be an object of the abelian category, and let $x,x' : T\to F^sA^k$ be filtered representatives. If $y:T\to E_\infty^p$ detects both, where $p$ reindexes to $(s,k)$, then $x-x'$ factors through $F^{s+1}A^k$. Conversely, if $y$ detects $x$ and this factorization exists, then $y$ detects $x'$. The zero infinity-page class detects $x$ if and only if $x$ factors through $F^{s+1}A^k$. For module-valued filtrations, a filtered element has zero associated graded image if and only if its ambient image belongs to $F^{s+1}A^k$.
+
+A zero associated graded piece makes two successive filtration subobjects equal. If all associated graded pieces in a specified interval vanish, the filtration levels at its endpoints agree.
+\lean{KIP126.Core.SpectralSequence.Convergence,KIP126.Core.SpectralSequence.ConvergingSS,KIP126.Core.SpectralSequence.ConvergingSequence,KIP126.Core.SpectralSequence.ConvergingSequenceMorphism,KIP126.Core.SpectralSequence.Detects,KIP126.Core.SpectralSequence.ConvergenceMorphism}
+\end{definition}
+
+
+\section{Differential relations and filtered-map extensions}
+
+An extension describes how a filtered map acts beyond its associated
+graded map. We first express differential relations using representatives,
+then use the same language for equations between filtered lifts.
+
+\begin{definition}[Representative differential relations and target cosets]
+\label{sem:SpectralSequence:ambient-differential}
+\level{coarse}
+Fix a page $r$, a degree $p$, a test object $T$, and put
+$n=n(r)$ and $q=p+\delta_r$. Write $i_n^p:Z_n^p\to V^p$ for inclusion.
+For $x:T\to V^p$ and $y:T\to V^q$, the representative differential
+relation from $x$ to $y$ means that there are lifts
+$\widetilde x:T\to Z_n^p$ and $\widetilde y:T\to Z_n^q$ with
+\[
+ i_n^p\circ\widetilde x=x,\qquad
+ i_n^q\circ\widetilde y=y,\qquad
+ d_r^p\circ\pi_n^p\circ\widetilde x=\pi_n^q\circ\widetilde y.
+\]
+Define the target coset by
+\[
+ C_r(y)=\{z:T\to V^q:\ y-z\text{ factors through }B_n^q\hookrightarrow V^q\}.
+\]
+Once the relation from $x$ to $y$ holds, $C_r(y)$ is exactly the set of
+its possible targets. The relation is essential when $y$ does not
+factor through $B_n^q$, equivalently when $0\notin C_r(y)$. These
+representative statements apply to an arbitrary test object $T$.
+\lean{KIP126.Core.SpectralSequence.DifferentialRelation,KIP126.Core.SpectralSequence.DifferentialTargetCoset,KIP126.Core.SpectralSequence.EssentialDifferentialRelation}
+\end{definition}
+
+
+\begin{definition}[Extensions of a filtered map and their indeterminacy]
+\label{sem:SpectralSequence:extension-equation}
+\level{coarse}
+Let $f:A\to B$ preserve filtrations $F,G$, and let $T$ be an object of the abelian category. A length-$n$ extension from $x:T\to\operatorname{gr}^s A$ to $y:T\to\operatorname{gr}^{s+n}B$ consists of $n\geq0$ and lifts $a:T\to F^sA$, $b:T\to G^{s+n}B$ with associated graded images $x,y$ such that $f\circ i_F\circ a=i_G\circ b$, where $i_F,i_G$ are the ambient inclusions.
+
+The target indeterminacy consists of targets of extensions from the zero source label for this same map and length. The target coset is obtained by translating that set. An extension is essential if its full target coset excludes zero.
+
+Extension relations are closed under addition and subtraction. For a known extension from $x$ to $y$, the full coset of $y$ consists exactly of all targets of $x$. Such an extension is essential exactly when $x$ has no zero target.
+
+For a test object $T$, a morphism $y:T\to\operatorname{gr}^{s+n}B$ belongs to the target indeterminacy if and only if $n\geq0$ and there are lifts $a:T\to F^{s+1}A$ and $b:T\to G^{s+n}B$ such that $f\circ i_F\circ a=i_G\circ b$ and $b$ has associated graded image $y$.
+
+At length zero, the extension relation is the equation for the induced associated graded map together with existence of a source lift. When the test object is projective, that lifting condition follows from the quotient epimorphism.
+\lean{KIP126.Core.SpectralSequence.FilteredMapExtension.Relation}
+\end{definition}
+
+
+% AimPaper: 2.1 definition 264 271
+\begin{definition}[The extension spectral sequence of a bounded filtered map]
+\label{paper:2.1}
+\label{sem:SpectralSequence:bounded-ess}
+\label{def:ess}
+\source{AimPaper Definition 2.1}
+\level{coarse}
+\uses{sem:SpectralSequence:filtration,sem:SpectralSequence:sequence,sem:SpectralSequence:extension-equation}
+For a filtration-preserving map $f:A\to B$, assume that both
+filtrations are bounded. The spectral sequence of its filtered two-term
+complex begins on page zero and has differential degree $(n,-1)$ at page
+$n$ in the filtration and chain-degree grading. Its source and target
+ambient objects are the corresponding associated graded pieces of the
+original filtrations.
+
+Definition 2.1 of \cite{LWX126} describes the extension spectral sequence
+for a map of spectra $f:X\to Y$, filtered by the Adams filtrations on
+$\pi_*X$ and $\pi_*Y$. In the article's grading it has
+\[
+ \ESS{f}_0^{s,t}\cong E_\infty^{s,t}(X)\oplus E_\infty^{s,t}(Y),
+ \qquad
+ d_n^f:\ESS{f}_n^{s,t}\longrightarrow\ESS{f}_n^{s+n,t+n},
+\]
+and the stated convergence target is
+$\Ker(\pi_*f)\oplus\Coker(\pi_*f)$, with $d_0$ induced by $f$.
+To use the bounded construction for the article's map, identify the
+associated graded objects with the Adams $E_\infty$ pages through the
+convergence isomorphisms. Its convergence target is $\Ker(\pi_*f)\oplus\Coker(\pi_*f)$
+under the corresponding extension-spectral-sequence comparison.
+\lean{KIP126.Core.SpectralSequence.FilteredMapExtension.sequence,KIP126.Core.SpectralSequence.FilteredMapExtension.sequence_firstPage,KIP126.Core.SpectralSequence.FilteredMapExtension.sequence_diffDeg,KIP126.Core.SpectralSequence.FilteredMapExtension.sourceIso,KIP126.Core.SpectralSequence.FilteredMapExtension.targetIso}
+\end{definition}
+
+\begin{theorem}[ESS differentials are extension equations]
+\label{sem:SpectralSequence:ess-equation}
+\level{coarse}
+\uses{sem:SpectralSequence:bounded-ess,sem:SpectralSequence:extension-equation,sem:SpectralSequence:ambient-differential}
+For bounded source and target filtrations, a nonnegative length $n$, and a projective test object, a differential relation of length $n$ in the extension spectral sequence holds if and only if the corresponding representative extension equation holds for the original filtered map.
+\lean{KIP126.Core.SpectralSequence.FilteredMapExtension.differentialRelation_iff}
+\end{theorem}
+
+\begin{definition}[Filtered transport of extensions and ESS differentials]
+\label{sem:SpectralSequence:filtered-transport}
+\level{coarse}
+A filtered isomorphism identifies the ambient objects and every filtration level, compatibly with inclusion. Suppose a commutative square of filtered maps has such isomorphisms on source and target.
+
+The resulting change of filtered objects preserves representative equations, extension relations, the full target indeterminacy, target cosets, and essentiality. These assertions apply to arbitrary filtrations.
+
+For any prescribed source and target filtration bounds, these
+isomorphisms identify the essential extensions satisfying those bounds.
+This is the invariance needed for the crossing conditions on filtered-map
+extensions introduced in Chapter~4. If all four filtrations are bounded
+and the test object is projective, transport also preserves the
+differential relation in the extension spectral sequences.
+\lean{KIP126.Core.SpectralSequence.FilteredPieceIso,KIP126.Core.SpectralSequence.FilteredPieceIso.gradedIso,KIP126.Core.SpectralSequence.FilteredMapTransport}
+\end{definition}
+
+
+\section{Products and converging multiplicative structures}
+
+Products must respect both passage between pages and detection in the
+filtered target. We record these compatibilities together, so that a
+product of page labels computes the leading term of the corresponding
+homotopy product.
+
+\begin{definition}[Pairings, convergence and a common-cycle unit]
+\label{sem:SpectralSequence:pairing}
+\level{coarse}
+Let $E_1,E_2,E_3$ be $\mathbb Z^2$-graded spectral sequences of modules
+over a commutative ring $R$, with the same differential degree on each
+page. A grading parity is an additive homomorphism
+$\chi:\mathbb Z^2\to\mathbb Z/2$. A pairing consists of $R$-bilinear maps
+\[
+ \mu_r:E_{1,r}^p\times E_{2,r}^q\longrightarrow E_{3,r}^{p+q}
+\]
+satisfying, under the degree identifications,
+\[
+ d_r\mu_r(x,y)=\mu_r(d_rx,y)+(-1)^{\chi(p)}\mu_r(x,d_ry).
+\]
+For $r$ at least all three initial pages, products of common
+representatives on pages $r$ and $r+1$ must again be common
+representatives. This is the compatibility of $\mu_{r+1}$ with the
+homology pairing induced by $\mu_r$.
+
+A converging pairing ties the finite-page products to one product on common infinite cycles, its induced $E_\infty$ product, the filtered abutment product, and the associated graded product. All comparisons use the same convergence isomorphisms.
+
+A compatible unit is represented by an infinite cycle in degree zero
+and a filtration-zero abutment element with the same associated graded
+image. Their projections are the units on the finite pages, on
+$E_\infty$, and in the abutment.
+\lean{KIP126.Core.SpectralSequence.SSPairing,KIP126.Core.SpectralSequence.GradingParity,KIP126.Core.SpectralSequence.NextPageRelation}
+\end{definition}
+
+\section{Indexing reference}
+
+The following conventions reconcile page numbers, successive cycle
+quotients and powers of $\lambda$. They may be consulted when comparing
+the formulas in later chapters.
+
+\begin{definition}[Page, length and auxiliary indexing conventions]
+\label{sem:SpectralSequence:page-indices}
+\label{sem:SpectralSequence:page-level-convention}
+\level{coarse}
+\uses{sem:SpectralSequence:pre-sequence}
+\textit{Page numbers and extension lengths.} Adams pages are numbered by integers $r\geq2$, whereas extension lengths
+are integers $\ell\geq0$. In particular an extension can have length
+zero or one; its length is not shifted by the Adams initial page $2$.
+
+The cycle-stage index $n(r)=\max\{r-r_0,0\}$ in
+Definition~\ref{sem:SpectralSequence:pre-sequence} is a separate index.
+For example, when $r_0=2$, the Adams page number $2$ corresponds to
+cycle stage $0$. Later Adams calculations use cycle and boundary
+subgroups of $E_2$ itself, with $E_r=Z_{r-1}/B_{r-1}$; those subgroups
+are the images of the present ambient cycle and boundary subobjects
+under projection to $E_2$. The convention is restated when the Adams
+families are introduced.
+
+\textit{Auxiliary affine indices.} When page numbers, cycle levels and quotient exponents advance together, their offsets can be recorded by an index $a\in\mathbb N$, an integer $b\in\mathbb Z$, and functions
+\[
+ \rho,z,q:\mathbb N\longrightarrow\mathbb Z
+\]
+recording the displayed page, cycle level and quotient exponent. They satisfy
+\[
+ \begin{aligned}
+ \rho(a)&=b, & \rho(k+1)&=\rho(k)+1,\\
+ z(k)&=q(k), & z(k+1)&=z(k)+1,\\
+ &&q(k+1)&=q(k)+1
+ \end{aligned}
+ \qquad(k\in\mathbb N).
+\]
+Thus the cycle level and quotient exponent agree and advance together,
+while the page has its own initial offset. The same function $\rho$
+records that offset whether its argument denotes an Adams page number
+or an extension length.
+
+Equivalently, $\rho(k)=b+k-a$ and $z(k)=q(k)=q(0)+k$. The offsets
+will always be given when these indices are used for pages or quotients.
+\lean{KIP126.Core.SpectralSequence.AdamsPage,KIP126.Core.SpectralSequence.ExtensionLength,KIP126.Core.SpectralSequence.ExtensionLength.toAdamsPage,KIP126.Core.SpectralSequence.AdamsPage.toExtensionLength,KIP126.Core.SpectralSequence.PageLevelConvention,KIP126.Core.SpectralSequence.PageLevelConvention.pageAtAdams,KIP126.Core.SpectralSequence.PageLevelConvention.pageAtExtension}
+\end{definition}

@@ -1,0 +1,19 @@
+Paper erratum
+
+The original PDF 2412.10879.pdf is unchanged. On page 2, the sentence
+about the Adams 1-line should say that h_j survives if and only if j <= 3,
+rather than j >= 3. The following nonzero d_2 formula applies for j >= 4.
+The accompanying main.tex includes this correction.
+
+On page 42, the sentence introducing the displayed list should say
+"the following four elements", rather than "the following three elements".
+The accompanying main.tex includes this correction.
+
+In Lemma 6.11(2), on page 35, the tensor and suspension conventions of
+May's Axiom TC3 give opposite boundary images:
+  boundary_{X smash U}(a) = -boundary_{T smash X'}(c)
+in pi_{n-1}(X smash X'). The first image equality is unchanged.
+The unsigned equality follows when the relevant actual boundary image
+is annihilated by two; mod-two Adams-page coefficients alone do not
+establish that condition. The Blueprint presents the corrected statement
+as "A signed version of Lemma 6.11". The original PDF is unchanged.

@@ -1,0 +1,455 @@
+\chapter{Differential Propagation and Survival}
+A differential leaving $h_6^2\in E_2^{2,128}(S^0)$ has its target in
+stem $125$. The calculations in this chapter constrain that stem and the
+adjacent stems needed for the extension argument. The central classes
+are $W,T,U$ and $H$ of Chapter~3: $T$ is the possible last target,
+$W$ is the possible source of a $d_6$ hitting $T$, and $U$ enters the
+theta-five square calculation. We also need the bottom-cell images
+in $C\nu$ and $C_2$.
+
+We begin with the finite differential assumptions, then calculate the
+surviving groups and the possible incoming differentials to $T$.
+Fact~\ref{paper:7.6} summarizes the sphere information;
+Theorem~\ref{sem:Computation:cofiber-results} gives the cofiber
+differential and excludes incoming differentials to $i_*T$ through
+page five.
+
+The calculations use the complete $E_2$ bases of Chapter~3. A basis
+expression always denotes a second-page label; an equation $d_r(x)=y$
+asserts that both labels have representatives on page $r$ satisfying
+that equation.
+As in Chapter~1, a label \emph{reaches} a page if it has a
+representative there, which may be zero. \emph{Nonzero survival}
+requires a nonzero representative. A permanent label has no outgoing
+differential, although an incoming boundary may make its limiting class
+zero. The later permanence argument excludes subsequent outgoing differentials;
+nonzero survival also uses incoming-differential control.
+
+The sphere and Hopf-cofiber inputs are stated first, followed by their
+consequences for the named classes. References for the calculations
+are collected in the final section.
+
+\section{Differential assumptions and page bounds}
+
+
+\begin{theorem}[Finite differential assumptions]
+\label{sem:SSComputation:admitted-finite-inputs}
+\label{sem:Computation:table-certification}
+\label{sem:SSComputation:ordinary-differential-inputs}
+\level{coarse}
+\uses{sem:AdamsComputation:moore-object,sem:Computation:table-bases,sem:Computation:w-t-u,sem:SpectralSequence:differential,sem:SpectralSequence:cycles-boundaries,sem:SpectralSequence:representative-expansion}
+Assume the $200$ statements of the
+\href{paper/finite-calculations.html}{supplementary finite calculation table}.
+All $200$ are distinct coordinate rows. They include the actual bottom-cell
+class of $C_2$ and the fixed sphere class $V$:
+\[
+ d_4(\bar x)=0,\quad \bar x\in E_2^{8,132}(C_2),\qquad
+ d_7(V)=0,\quad V\in E_2^{9,132}(S^0).
+\]
+Each equation includes representatives of the specified labels on its page.
+The first equation has target degree $(12,135)$ and the second $(16,138)$.
+The Lean certification of these $200$ computational inputs is pending.
+As in Chapter~3, indices
+begin at $0$, a list denotes the sum of the corresponding basis
+vectors, and the empty list denotes zero. For $C_2$, coordinates denote
+images of sphere basis vectors under the bottom-cell map $i_*$. The last
+two rows have source coordinates $[0]$ on $C_2$ and $[0,1]$ on the sphere.
+Each statement is a
+differential equation, continuation to a page $r\ge2$, a boundary bound,
+or the exclusion of a differential equation. A differential with source
+bidegree $(s,t)$ has target bidegree $(s+r,t+r-1)$. The table includes
+page-$1000$ continuations.
+A boundary bound records membership in the indicated boundary group,
+allowing zero and sums of earlier boundaries. An excluded equation is
+the negation of the specified representative differential relation.
+
+The four direct $d_2$ equations of
+Theorem~\ref{sem:AdamsComputation:direct-d2-records} and the two staircase
+assumptions in Theorem~\ref{sem:SSComputation:staircase-inputs} are separate
+inputs. When a propagation argument needs one of these four second
+differentials, it uses the Chapter~3 input directly; none is repeated in
+the finite table above.
+\lean{KIP126.SSComputation.Internal.Certification.certified_result,KIP126.Computation.Table.result,KIP126.SSComputation.Moore.bottom_source_d4_zero,KIP126.SSComputation.Moore.v_d7_zero}
+\end{theorem}
+
+\begin{theorem}[Finite-page survival of the selected classes]
+\label{sem:SSComputation:selected-class-survival}
+\level{coarse}
+\uses{sem:SSComputation:ordinary-differential-inputs,sem:AdamsComputation:moore-object,sem:Computation:table-bases,sem:SpectralSequence:cycles-boundaries}
+The two ordinary equations in the finite input table imply
+\[
+ d_3(\bar x)=0,\qquad \bar x\in Z_4^{8,132}(C_2),\qquad
+ V\in Z_8^{9,132}(S^0).
+\]
+Thus $\bar x$ reaches $E_5$ and $V$ reaches $E_9$.
+\lean{KIP126.SSComputation.Moore.bottom_source_d3_zero,KIP126.SSComputation.Moore.bottom_source_cycles_four,KIP126.SSComputation.Moore.v_cycles_eight}
+\end{theorem}
+\begin{proof}
+The fourth-page representatives for $\bar x$ give the preceding zero
+third differential, and $d_4(\bar x)=0$ gives the fifth-page lift.
+The zero seventh differential gives an eighth-page representative for $V$.
+Both basis classes at its next possible target $(17,139)$ are killed by
+the two third differentials from $(14,137)$ in the finite table.
+The eighth differential is therefore zero and $V$ reaches $E_9$.
+\end{proof}
+
+\begin{theorem}[Representatives for two staircase classes]
+\label{sem:SSComputation:staircase-inputs}
+\level{coarse}
+\uses{sem:Computation:table-bases,sem:SpectralSequence:cycles-boundaries}
+Assume that the two sphere labels
+\[
+ b_{S^0;14,138,2},\qquad
+ b_{S^0;15,139,1}+b_{S^0;15,139,3}
+\]
+reach page $1000$. Equivalently, they belong respectively to
+$Z_{999}^{14,138}(S^0)$ and $Z_{999}^{15,139}(S^0)$.
+These are two additional assumptions beyond the $200$ statements above.
+The page-$1000$ representatives are allowed to be zero.
+\lean{KIP126.Computation.Table.staircase_result}
+\end{theorem}
+The passage from these finite page bounds to permanence uses the
+vanishing of every later differential target. Nonzero survival also
+requires control of incoming differentials.
+
+
+\section{Sphere Adams differentials}
+
+
+\begin{theorem}[Third-page sphere differentials]
+\label{sem:Computation:low-differentials}
+\level{coarse}
+\uses{sem:Computation:standard-atoms,sem:Computation:named-basis-identities}
+The sphere Adams spectral sequence has the following nonzero
+differentials:
+\[
+d_3(h_4x_{109,12})=h_1x_{122,15,2},\qquad
+ d_3(h_0^2x_{123,13,2})=h_0^2x_{122,16},
+\]
+\[
+d_3(x_{126,4})=h_0^2x_{125,5}.
+\]
+\lean{KIP126.Computation.Standard.d3_h4_x109_12,KIP126.Computation.Standard.d3_h0Square_x123_13_2,KIP126.Computation.Standard.d3_x126_4}
+\end{theorem}
+\begin{proof}
+\uses{sem:Computation:table-bases,sem:Computation:table-certification,sem:SSComputation:staircase-inputs}
+In the bases of Chapter~3, these are the corresponding third
+differentials in the assumed finite calculation. The basis identities
+identify their sources and targets with the displayed products; the
+targets are nonzero on $E_3$. Thus each source direction disappears
+on the next page, while each target becomes a boundary. The second
+differentials on $h_0^6h_6$ and $h_6$ are supplied independently in
+Chapter~3.
+\end{proof}
+
+\begin{theorem}[A third-differential alternative]
+\label{sem:Computation:d3-candidates}
+\level{coarse}
+\uses{sem:Computation:w-t-u,sem:Computation:named-basis-identities,sem:Computation:table-certification}
+The differential on $x_{126,6}$ has one of the two targets
+\[
+ d_3(x_{126,6})=B=h_5x_{94,8}
+ \quad\text{or}\quad
+ d_3(x_{126,6})=B'=h_5x_{94,8}+h_6b.
+\]
+\lean{KIP126.Computation.Standard.d3_x126_6_candidates}
+\end{theorem}
+
+\section{Survival, incoming control and higher-page vanishing}
+
+\begin{theorem}[The correction term survives nontrivially]
+\label{sem:Computation:correction-survival}
+\level{coarse}
+\uses{sem:Computation:w-t-u,sem:SpectralSequence:permanent,sem:Computation:table-certification}
+The class $C=e_0\Delta h_6g$ survives to a nonzero element of
+$E_\infty^{13,137}$. In particular it provides the filtration-thirteen
+correction class in the theta-five square calculation.
+\lean{KIP126.Computation.Standard.correction_permanent}
+\end{theorem}
+
+% AimPaper: 7.6 fact 2156 2167
+\begin{fact}[Sphere classes and the incoming differentials to $T$]
+\label{paper:7.6}
+\label{fact:theta5sqAF}
+\label{sem:Computation:incoming-control}
+\source{AimPaper Fact 7.6}
+\level{coarse}
+\uses{sem:Computation:table-bases,sem:Computation:table-certification,sem:Computation:w-t-u,sem:AdamsSynthetic:standard-classes,sem:Computation:square-line,sem:AdamsComputation:direct-d2-records}
+The sphere computations of \cite{LWX126}, Fact 7.6, give:
+\begin{enumerate}
+\item $W=x_{126,8,4}+x_{126,8}$ survives nontrivially to $E_6$.
+\item $T=h_1h_4x_{109,12}$ is a permanent label, with no outgoing
+ differential. Its only possible nonzero incoming differentials are
+\[
+ d_6(W)=T\quad\text{or}\quad d_{12}(h_6^2)=T.
+\]
+Consequently no other page $r\ge2$ hits $T$, no differential from
+$x_{126,6}$ has target $T$, and the $d_6$ target of $W$ belongs to
+$\{0,T\}$.
+\item $U=h_0^2x_{124,8}$ survives nontrivially to $E_\infty$.
+\item $E_5^{25,150}(S^0)$ has a unique nonzero class, represented by
+$H=g^4\Delta h_1g$.
+\end{enumerate}
+\lean{KIP126.Computation.Standard.w_to_e6,KIP126.Computation.Standard.t_permanent_cycle,KIP126.Computation.Standard.t_only_incoming,KIP126.Computation.Standard.u_permanent,KIP126.Computation.Standard.high_e5,KIP126.Computation.Standard.no_other_incoming,KIP126.Computation.Standard.table9,KIP126.Computation.Standard.w_d6_targets}
+\end{fact}
+\begin{proof}
+\textit{(See \cite{LWX126}, Fact 7.6.)}
+\href{paper/main.tex.html#L2156}{Original statement and context}.
+An incoming differential to $T\in E_r^{14,139}$ has source degree
+$(14-r,140-r)$. Figure 1 and the Appendix tables of \cite{LWX126}, in
+stems $124$, $125$ and $126$, leave only the sources of filtrations eight and two, giving
+the possible $d_6$ and $d_{12}$ above. The filtration-six source in
+stem $126$ supports the nonzero $d_3$ of
+Theorem~\ref{sem:Computation:d3-candidates}, so it cannot give another
+incoming differential. The page-twelve source lies in degree $(2,128)$; by
+Theorem~\ref{sem:Computation:square-line}, its only nonzero label is
+$h_6^2$. The same calculation gives $W$ nonzero on $E_6$ and no outgoing
+differential on $T$.
+
+In stem $124$, the class $U$ has a nonzero limiting image. In stem $125$
+and filtration twenty-five, quotienting by the earlier differentials
+leaves a one-dimensional fifth-page group generated by $H$. These
+calculations use the differential assumptions and the complete bases,
+independently of the permanence of $h_6^2$.
+\end{proof}
+
+\begin{theorem}[Boundary products of the permanent-class candidates]
+\label{sem:Computation:product-boundaries}
+\level{coarse}
+\uses{sem:Computation:w-t-u,sem:Computation:standard-atoms,sem:SpectralSequence:cycles-boundaries}
+The products $Ph_2$ and $Qh_2$ are $d_2$ boundaries, and hence vanish
+on $E_3$.
+\lean{KIP126.Computation.Standard.p_h2_boundary,KIP126.Computation.Standard.q_h2_boundary}
+\end{theorem}
+\begin{proof}
+\uses{sem:AdamsComputation:direct-d2-records,sem:Computation:named-basis-identities,sem:SpectralSequence:cycles-boundaries}
+The second $d_2$ equation of Chapter~3 has target
+$b_{S^0;12,137,2}=Ph_2$. Adding the third and fourth equations gives
+target $b_{S^0;13,138,3}+b_{S^0;13,138,4}=Qh_2$, by the product
+identities in that chapter. Thus both products lie in the incoming
+$d_2$ image. Their vanishing on $E_3$ will constrain the products of
+later synthetic lifts.
+\end{proof}
+
+
+\begin{theorem}[The required higher-page vanishing components]
+\label{sem:Computation:higher-page-vanishing}
+\level{coarse}
+\uses{sem:AdamsSynthetic:families,sem:Computation:bounded-comparison}
+The following groups vanish: $E_5^{11,135}$, $E_4^{12,136}$, $E_4^{12,137}$ and
+$E_5^{13,138}$.
+\lean{KIP126.Computation.Standard.e5_stem124_af11,KIP126.Computation.Standard.e4_stem124_af12,KIP126.Computation.Standard.e4_stem125_af12,KIP126.Computation.Standard.e5_stem125_af13}
+\end{theorem}
+\begin{proof}
+\uses{sem:Computation:table-bases,sem:Computation:table-certification,sem:AdamsComputation:direct-d2-records}
+At each step $E_{r+1}=\ker d_r/\operatorname{im}d_r$. In these
+bidegrees, the direct $d_2$ equations of Chapter~3 and the subsequent
+finite differential calculations make the incoming images exhaust
+the cycles by the stated page. The resulting quotients are zero.
+The complete bases ensure that this calculation accounts for every
+cycle direction.
+\end{proof}
+
+
+\section{The Hopf cofiber differential}
+
+\begin{fact}[Nonzero survival of $Y$ to $E_5$]
+\label{sem:Computation:y-to-e5}
+\source{AimPaper Fact 7.15, survival assertion}
+\level{coarse}
+By \cite{LWX126}, Fact 7.15, the class
+$Y=h_0^2x_{125,9,2}$ in bidegree $(11,136)$ of the sphere Adams
+$E_2$-page survives nontrivially to $E_5$.
+\uses{sem:Computation:w-t-u,sem:Computation:table-bases,sem:Computation:table-certification,sem:AdamsComputation:direct-d2-records}
+\lean{KIP126.Computation.Standard.y_to_e5}
+\end{fact}
+\begin{proof}
+The stem-$125$ calculation in the Appendix of \cite{LWX126} leaves
+$Y$ nonzero on $E_5$. The exclusion of all incoming differentials uses
+Proposition~\ref{paper:7.8}, as explained in Chapter~6.
+\end{proof}
+
+\begin{theorem}[The cofiber differential and survival window]
+\label{sem:Computation:cofiber-results}
+\level{coarse}
+\uses{sem:Computation:nu-cofiber,sem:Computation:w-t-u}
+In the Hopf cofiber Adams spectral sequence there is a nonzero
+differential $d_3(A_{C\nu})=i_*Y$ in bidegrees
+$(8,134)\to(11,136)$. The class $i_*T$ survives nontrivially to page $6$
+and is not hit on any page in the window $2\leq r\leq5$.
+\lean{KIP126.Computation.Standard.cofiber_d3,KIP126.Computation.Standard.cofiber_target_to_e6,KIP126.Computation.Standard.cofiber_target_not_hit_through5}
+\end{theorem}
+\begin{proof}
+\uses{sem:Literature:nu-cofiber,sem:Computation:table-bases,sem:Computation:named-basis-identities,sem:Computation:table-certification,sem:Computation:y-to-e5}
+The basis identities of Chapter~3 are
+\[
+ A_{C\nu}=b_{C\nu;8,134,0}+b_{C\nu;8,134,3}+b_{C\nu;8,134,4},
+ \qquad i_*Y=b_{C\nu;11,136,3}.
+\]
+In these bases, the cofiber differential sends that sum of three source
+vectors to the indicated target vector. This is the asserted equation.
+
+The exact sequence of the Hopf cofiber has the segment
+\[
+ E_2^{10,132}(S^0)\xrightarrow{\ h_2\ }
+ E_2^{11,136}(S^0)\xrightarrow{\ i_*\ }E_2^{11,136}(C\nu).
+\]
+The first group is zero, so $i_*$ is injective.
+Since $Y$ is nonzero, so is $i_*Y$. All five basis elements of
+$E_2^{9,135}(C\nu)$ reach $E_3$, so their $d_2$ images vanish.
+There are therefore no $d_2$ boundaries in the target, and every
+third-page representative of $i_*Y$ is nonzero.
+
+Thus the target of the displayed third differential is nonzero on
+its page. The cofiber calculation also leaves $i_*T$ nonzero through
+page six and excludes incoming differentials to it on pages two
+through five;
+the bottom-cell comparison identifies this class with the image of $T$.
+\end{proof}
+
+
+
+\section{Third-page screening of the second line}
+
+
+\begin{theorem}[The second line after the second differential]
+\label{sem:AdamsCalculations:two-line-d2-screening}
+\level{coarse}
+The second-line calculation uses \cite{Adams60}, Theorem 4.6.1,
+and \cite{LinExt4}, Theorem 1.3; compare the proof of Corollary 1.5
+in \cite{LWX126}.
+
+Write $H_{i,j}=h_ih_j$. If $0\leq i\leq j\leq7$,
+$H_{i,j}\ne0$ on $E_2$, and $H_{i,j}$ reaches $E_3$, then its label
+belongs to the following list:
+\[
+ H_{0,2},H_{0,3},H_{2,4},H_{1,j}\ (3\leq j\leq7),h_j^2\ (0\leq j\leq7),
+ H_{2,5},H_{3,5},H_{3,6},H_{0,4}.
+\]
+These are the second-line $d_2$ candidates reaching $E_3$.
+\lean{KIP126.SSComputation.two_line_d2_candidates}
+\end{theorem}
+\begin{proof}
+\uses{sem:Literature:one-line-differentials,sem:Computation:bounded-comparison,sem:Computation:table-bases,sem:Computation:named-basis-identities}
+There are 36 pairs in the stated range. Twenty already belong
+to the candidate list. The seven adjacent products $H_{i,i+1}$ vanish
+because their second-page groups are zero, contradicting the
+nonzero hypothesis.
+
+For the remaining nine pairs, multiplicative Leibniz gives
+\[
+\begin{aligned}
+d_2(H_{0,j})&=h_0^2h_{j-1}^2 &&(j=5,6,7),\\
+d_2(H_{2,j})&=h_0h_2h_{j-1}^2 &&(j=6,7),\\
+d_2(H_{3,7})&=h_0h_3h_6^2,\\
+d_2(H_{4,6})&=h_0h_3^2h_6,\\
+d_2(H_{4,7})&=h_0h_3^2h_7,\\
+d_2(H_{5,7})&=h_0h_4^2h_7.
+\end{aligned}
+\]
+The other Leibniz terms vanish by adjacent-product relations and
+$h_4h_6^2=0$. Each displayed target is a nonzero basis
+monomial under the multiplicative $E_2$ comparison of Chapter~3.
+A label that reaches the third page has zero second differential,
+so these nine pairs are excluded. The list therefore retains $H_{0,4}$
+and all squares in the stated range. Later differentials and the
+geometric exclusion impose further restrictions.
+\end{proof}
+
+
+\section{Selected classes, survival ranges and incoming differentials}
+
+% AimPaper: 7.13 fact 2377 2385
+\begin{fact}[The second differential on $x_{125,8}$]
+\label{paper:7.13}
+\label{fact:x_123_9}\label{fact:x1239}
+\source{AimPaper Fact 7.13, second assertion}
+\level{coarse}
+The sphere Adams spectral sequence has the nonzero differential
+\[
+ d_2(x_{125,8})=h_1V+U.
+\]
+The continuation of $V$ to $E_9$ used below is supplied by
+Theorem~\ref{sem:SSComputation:selected-class-survival}.
+\uses{sem:Computation:table-bases,sem:Computation:table-certification}
+\lean{KIP126.Computation.Standard.d2_x125_8}
+\end{fact}
+
+% AimPaper: 7.19 fact 2613 2615
+\begin{fact}[The class X through page six]
+\label{paper:7.19}
+\source{AimPaper Fact 7.19}
+\level{coarse}
+From \cite{LWX126}, Fact 7.19.\par
+
+\label{fact:h_1_mul_x_121_7}\label{fact:h1x1217}
+    The class $X=h_1x_{121,7}$ survives nontrivially to $E_6$.
+    No classical incoming differential hits this label.
+
+\uses{sem:Computation:table-bases,sem:Computation:table-certification}
+
+
+\lean{KIP126.Computation.Standard.x_to_e6,KIP126.Computation.Standard.x_not_hit}
+
+\end{fact}
+\begin{proof}
+\textit{(See \cite{LWX126}, Fact 7.19.)} \href{paper/main.tex.html#L2613}{Original statement and context}.
+
+The stem-$122$ calculation in the Appendix of \cite{LWX126} gives
+no outgoing differential on $X$ before $d_6$ and no incoming
+differential to $X$. Thus $X$ is nonzero on $E_6$. These sphere
+calculations will be used in constructing the later $\nu$-extension.
+\end{proof}
+
+\section{Permanent cycles in stem 122}
+
+% AimPaper: 7.21 fact 2689 2696
+\begin{fact}[Nonzero permanent classes in stem 122]
+\label{paper:7.21}
+\source{AimPaper Fact 7.21}
+\level{coarse}
+From \cite{LWX126}, Fact 7.21.\par
+
+\label{fact:stem122}
+\begin{enumerate}
+    \item $P=h_6Md_0$ survives nontrivially to $E_\infty$.
+    \item $Q=h_5x_{91,11}$ survives nontrivially to $E_\infty$.
+\end{enumerate}
+
+\uses{sem:Computation:table-bases,sem:Computation:table-certification}
+
+
+\lean{KIP126.Computation.Standard.p_permanent,KIP126.Computation.Standard.q_permanent}
+
+\end{fact}
+\begin{proof}
+\textit{(See \cite{LWX126}, Fact 7.21.)} \href{paper/main.tex.html#L2689}{Original statement and context}.
+
+The stem-$122$ calculation in the Appendix of \cite{LWX126} leaves
+$P$ and $Q$ as nonzero permanent classes. Their products with $h_2$
+are the second-page boundaries computed above. The coexistence of
+these permanent sources with those boundary products is the sphere
+information used in the contradiction argument; the passage to their
+synthetic representatives uses Chapter~4.
+\end{proof}
+
+\section{Sources for the finite calculations}
+
+The propagation calculations of \cite{LinProgram} use products,
+naturality and cofiber sequences; see also
+\cite{LWXZenodoCurrent,LWXMachine}. They supply the finite inputs of
+this chapter, separately from the four direct second-differential
+inputs of Chapter~3.
+
+The \href{paper/finite-calculations.html}{finite calculation table}
+contains the $200$ distinct assumptions used in this chapter, expressed
+in the complete bases of Chapter~3.
+
+The two staircase labels of
+Theorem~\ref{sem:SSComputation:staircase-inputs} occur in the sphere
+calculation of \cite{LWXZenodoCurrent}, version
+\texttt{v126.3.cw49}. The permanence convention of
+\cite{LWXMachine}, Notation 3.5, assumes that visible nonzero
+differentials have length less than $1000$. The additional assumptions
+used here are precisely that these two labels have representatives on
+page $1000$. The later permanence argument excludes every subsequent differential target.

@@ -1,0 +1,77 @@
+\chapter{Framed Manifolds of Kervaire Invariant One}
+Browder's theorem turns the permanence of $h_6^2$ into a geometric
+existence theorem. In dimensions at most $254$, a closed smooth stably
+framed manifold of Kervaire invariant one exists precisely in a dimension
+$2^{j+1}-2$, $j\ge1$, for which $h_j^2$ survives nontrivially in the
+sphere Adams spectral sequence. This is the bounded comparison of
+Theorem~\ref{sem:Literature:finite-browder}. The exclusion of \cite{HHR}
+then applies in dimensions at least $254$.
+
+Use the closed smooth stably framed manifolds and Kervaire invariant of
+Definitions~\ref{sem:Literature:closed-framed-manifolds}
+and~\ref{sem:Literature:kervaire-invariant}. The geometric comparisons
+of Chapter~2 identify this invariant with the framing-induced Arf
+invariant and relate Pontryagin--Thom classes to Adams detection.
+We assume these identifications and the stated Browder comparison,
+together with the inputs of the permanence theorem. The homotopy
+statements use $2$-completed, connective spectra of finite type.
+
+The dimension convention is the $4k+2$ convention in the introduction of
+\cite{LWX126}. Thus the index in Browder's geometric criterion is a positive
+integer: $j\geq 1$. The geometric criterion concerns positive dimensions congruent to $2$ modulo $4$.
+\section{Framed manifolds of Kervaire invariant one}
+% AimPaper: 1.1 theorem 102 104
+\begin{theorem}[A framed manifold of Kervaire invariant one in dimension $126$]
+\label{paper:1.1}
+\source{AimPaper Theorem 1.1}
+\level{coarse}
+From \cite{LWX126}, Theorem 1.1.\par
+
+\label{thm:main}
+There exists a closed smooth stably framed manifold of dimension $126$
+with Kervaire invariant one.
+
+\uses{sem:Literature:finite-browder,paper:1.4}
+
+\lean{KIP126.Geometry.kervaire_invariant_one_126}
+
+\end{theorem}
+\begin{proof}
+Theorem~\ref{paper:1.4} gives nonzero survival of $h_6^2$. Apply
+Browder's criterion, Theorem~\ref{sem:Literature:finite-browder}, with
+$j=6$. Since $2^{6+1}-2=126$, it yields the required manifold.
+\end{proof}
+
+
+% AimPaper: 1.2 corollary 108 110
+\begin{corollary}[Dimensions admitting Kervaire invariant one]
+\label{paper:1.2}
+\source{AimPaper Corollary 1.2}
+\level{coarse}
+From \cite{LWX126}, Corollary 1.2.\par
+
+A closed smooth stably framed $n$-manifold of Kervaire invariant one
+exists if and only if
+\[
+ n\in\{2,6,14,30,62,126\}.
+\]
+
+\uses{paper:1.1,sem:Literature:finite-browder,sem:Literature:hhr-geometric,paper:1.4,sem:Literature:two-line-classical-inputs}
+
+\lean{KIP126.Geometry.kervaire_invariant_one_iff}
+
+\end{corollary}
+\begin{proof}
+For $n\leq254$, the bounded Browder criterion,
+Theorem~\ref{sem:Literature:finite-browder}, makes existence equivalent
+to $n=2^{j+1}-2$ and nonzero survival of $h_j^2$, with $j\ge1$.
+The low squares for $1\le j\le3$ survive by the classical inputs in
+\cite{MayThesis1964}; $j=4,5$ are supplied by
+\cite{MahowaldTangora,BJMtheta5}. Theorem~\ref{paper:1.4} supplies
+$j=6$, while Theorem~\ref{sem:Literature:hhr-geometric} excludes
+dimension $254$ and every higher dimension.
+
+Precisely $1\le j\le6$ therefore occur. Evaluating $2^{j+1}-2$ at these six
+indices gives $2,6,14,30,62,126$. Conversely each listed dimension is
+supplied by its surviving square and Browder's criterion.
+\end{proof}

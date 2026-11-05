@@ -1,0 +1,37 @@
+module
+
+public import KIP126.ProofTools.SyntheticCoverage.Differentials
+public import KIP126.ProofTools.SyntheticCoverage.SelectiveDifferentialMain
+public import KIP126.ProofTools.SyntheticCoverage.SelectiveDifferential
+public import KIP126.ProofTools.SyntheticCoverage.KnownSourceSurvival
+public import KIP126.ProofTools.SyntheticCoverage.KnownSourceOrdinary
+public import KIP126.ProofTools.SyntheticCoverage.KnownSourceOrdinaryBase
+public import KIP126.ProofTools.SyntheticCoverage.KnownSourceDegenerate
+public import KIP126.ProofTools.SyntheticCoverage.FiniteBoundaryBranches
+public import KIP126.ProofTools.SyntheticCoverage.SourceFiniteBottom
+public import KIP126.ProofTools.SyntheticCoverage.OrdinarySourceFinite
+public import KIP126.ProofTools.SyntheticCoverage.SourceFiniteDifferential
+public import KIP126.ProofTools.SyntheticCoverage.EarlyTargetDifferential
+public import KIP126.ProofTools.SyntheticCoverage.EarlySourceDifferential
+public import KIP126.ProofTools.SyntheticCoverage.HigherEarlyDifferential
+public import KIP126.ProofTools.SyntheticCoverage.HigherEarlySource
+public import KIP126.ProofTools.SyntheticCoverage.PositiveTorsionDifferential
+public import KIP126.ProofTools.SyntheticCoverage.OrdinaryEarlyDifferential
+public import KIP126.ProofTools.SyntheticCoverage.OrdinaryEarlyTorsionDifferential
+public import KIP126.ProofTools.SyntheticCoverage.RecursiveDifferentialMain
+public import KIP126.ProofTools.SyntheticCoverage.RecursivePositiveDifferentialMain
+public import KIP126.ProofTools.SyntheticCoverage.Permanence
+public import KIP126.ProofTools.SyntheticCoverage.PositivePermanence
+public import KIP126.ProofTools.SyntheticCoverage.GeneralBoundaryPermanence
+public import KIP126.ProofTools.SyntheticCoverage.FinitePermanence
+public import KIP126.ProofTools.SyntheticCoverage.PositiveFinitePermanence
+public import KIP126.ProofTools.SyntheticCoverage.AffinePermanence
+public import KIP126.ProofTools.SyntheticCoverage.PositiveAffinePermanence
+public import KIP126.ProofTools.SyntheticCoverage.RecursivePermanence
+public import KIP126.ProofTools.SyntheticCoverage.EarlyD2Corollaries
+public import KIP126.ProofTools.SyntheticCoverage.SourceAdjustedPermanenceCorollaries
+public import KIP126.ProofTools.SyntheticCoverage.SourceAdjustedPermanencePositiveCorollaries
+public import KIP126.ProofTools.SyntheticCoverage.TorsionResidualOrdinary
+public import KIP126.ProofTools.SyntheticCoverage.TorsionResidualPositive
+
+/-! Differential and permanence criteria from synthetic computations. -/

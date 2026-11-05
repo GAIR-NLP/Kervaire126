@@ -1,0 +1,129 @@
+module
+
+public import KIP126.Main.SectionSeven.NormalizedNu
+import all KIP126.Main.Internal.DetectionLabels
+import all KIP126.Main.Internal.QuotientCalculus
+import all KIP126.Main.Internal.Selected.DetectionOperations
+public import KIP126.ProofTools.Operations
+
+/-! The bottom-cell rigidity argument uses actual E₆ survival and the BHS
+quotient by B₅, with the specified survival and comparison maps. -/
+@[expose] section
+namespace KIP126.Main.Internal.Rigidity
+open CategoryTheory CategoryTheory.Limits
+open KIP126.StableHomotopy KIP126.Synthetic.Context KIP126.Synthetic.SpectralSequence
+open KIP126.AdamsSynthetic KIP126.AdamsSynthetic.Completed KIP126.Core.SpectralSequence
+open KIP126.Kervaire.Route KIP126.Literature KIP126.ProofTools.Internal KIP126.ProofTools.Internal.Mahowald
+open KIP126.Main.Internal KIP126.Main.Internal.Selected
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option maxRecDepth 10000
+set_option maxHeartbeats 1000000
+
+theorem sphere_zero_weight_label_14_139
+    (x : background.classical.sphere.Page 2 (14,139))
+    (a : BiHom 125 139 (S_0_0 : SyntheticSpectrum))
+    (ha : Detects (background.convergence .sphere) (14,139,139)
+      (background.comparison.sphereE2 14 139 0 x) a) :
+    sphereFirstQuotient background 14 139 (quotientClass 1 a)=x := by
+  let y := sphereFirstQuotient background 14 139 (quotientClass 1 a)
+  have hd := detects_map .sphere (.quotient 1 .sphere)
+    (XModLambdaN.incl (S_0_0 : SyntheticSpectrum) 1) (14,139,139) _ a ha
+  have hd' := background.sphereDetectionCompatible.first_quotient 14 139 y
+  have hy : (sphereFirstQuotient background 14 139).symm y=quotientClass 1 a :=
+    (sphereFirstQuotient background 14 139).symm_apply_apply _
+  dsimp only [KIP126.Literature.sphereFirstQuotient] at hy
+  rw [hy] at hd'
+  obtain ⟨e,he,hf⟩ := detects_infinity_equal (.quotient 1 .sphere) (14,139,139)
+    (quotientClass 1 a) _ _ hd hd'
+  let g := XModLambdaN.map background.nu.unitIso.inv 1
+  have he' := family_infinity_representative_map g (14,139,139) _ _ he
+  have hf' := family_infinity_representative_map g (14,139,139) _ _ hf
+  change HasInfinityRepresentative _ 2 (14,139,139)
+    (familyPageMap background.family g 2 (14,139,139) (quotientLabel 1 14 139 0 x)) _ at he'
+  change HasInfinityRepresentative _ 2 (14,139,139)
+    (familyPageMap background.family g 2 (14,139,139) (quotientLabel 1 14 139 0 y)) _ at hf'
+  have hlx := sphere_quotient_label_to_nu 1 0 14 139 x
+  have hly := sphere_quotient_label_to_nu 1 0 14 139 y
+  change familyPageMap background.family g 2 (14,139,139) (quotientLabel 1 14 139 0 x)=_ at hlx
+  change familyPageMap background.family g 2 (14,139,139) (quotientLabel 1 14 139 0 y)=_ at hly
+  rw [hlx] at he'
+  rw [hly] at hf'
+  have hi (v : background.classical.sphere.Page 2 (14,139)) :=
+    KIP126.Literature.Standard.eInfinity_finite_labels .sphere 1 (by decide)
+      14 139 139 (by decide) v ((background.family.map g).eInftyMap (14,139,139) e)
+  obtain ⟨hx,hxq⟩ := (hi x).mp he'
+  obtain ⟨hy,hyq⟩ := (hi y).mp hf'
+  let xx : cycles background .sphere 1 (14,139) := ⟨x,hx⟩
+  let yy : cycles background .sphere 1 (14,139) := ⟨y,hy⟩
+  have heq : subquotientClass _ (boundaries background .sphere 1 (14,139)) xx =
+      subquotientClass _ (boundaries background .sphere 1 (14,139)) yy := hxq.symm.trans hyq
+  have hz : subquotientClass _ (boundaries background .sphere 1 (14,139)) (xx-yy)=0 := by
+    rw [map_sub,heq,sub_self]
+  have hm := (subquotientClass_eq_zero_iff _ _ (xx-yy)).mp hz
+  change x-y ∈ boundaries background .sphere 1 (14,139) at hm
+  rw [boundaries_one background .sphere (14,139),Submodule.mem_bot] at hm
+  exact (sub_eq_zero.mp hm).symm
+
+theorem sphere_to_nu_label (X : AdamsObject)
+    (f : SphereSpectrum ⟶ X.obj background.auxiliary)
+    (x : background.classical.sphere.Page 2 (14,139)) :
+    familyPageMap background.family (background.nu.unitIso.inv ≫ background.nu.functor.map f) 2 (14,139,139-(4:ℕ))
+      (background.comparison.sphereE2 14 139 4 x) =
+    targetNuLabel background X 14 139 4 ((background.classical.map f).pageMap 2 (14,139) x) := by
+  let nx : (background.family.obj ((SyntheticCategory.biShift (0,0)).obj
+      (background.nu.functor.obj SphereSpectrum))).E₂ (14,139,139-(4:ℕ)) := by
+    simpa only [AdamsObject.obj, ClassicalObject.obj,add_zero] using background.comparison.nuE2 .sphere 0 14 139 4 x
+  let ny : (background.family.obj ((SyntheticCategory.biShift (0,0)).obj
+      (background.nu.functor.obj (X.obj background.auxiliary)))).E₂ (14,139,139-(4:ℕ)) := by
+    simpa only [add_zero] using background.comparison.nuE2 X 0 14 139 4 ((background.classical.map f).pageMap 2 (14,139) x)
+  have hs : familyPageMap background.family
+      (SyntheticCategory.biShift_zero.hom.app _ ≫ background.nu.unitIso.hom) 2 (14,139,139-(4:ℕ)) nx =
+      background.comparison.sphereE2 14 139 4 x := by
+    exact background.comparison.sphere_nu 14 139 4 x
+  have hn : familyPageMap background.family ((SyntheticCategory.biShift (0,0)).map (background.nu.functor.map f))
+      2 (14,139,139-(4:ℕ)) nx = ny := by
+    exact background.comparison.nu_natural .sphere X f 0 14 139 4 x
+  rw [← hs]
+  have hc := ConcreteCategory.congr_hom
+    (family_page_comp
+      (SyntheticCategory.biShift_zero.hom.app _ ≫ background.nu.unitIso.hom)
+      (background.nu.unitIso.inv ≫ background.nu.functor.map f) 2 (14,139,139-(4:ℕ))) nx
+  erw [hc]
+  have hm : (SyntheticCategory.biShift_zero.hom.app _ ≫ background.nu.unitIso.hom) ≫
+      (background.nu.unitIso.inv ≫ background.nu.functor.map f) =
+      (SyntheticCategory.biShift (0,0)).map (background.nu.functor.map f) ≫
+        SyntheticCategory.biShift_zero.hom.app _ := by
+    simp only [Category.assoc,Iso.hom_inv_id_assoc]
+    exact (SyntheticCategory.biShift_zero.hom.naturality (background.nu.functor.map f)).symm
+  rw [hm]
+  erw [← ConcreteCategory.congr_hom (family_page_comp
+    ((SyntheticCategory.biShift (0,0)).map (background.nu.functor.map f))
+    (SyntheticCategory.biShift_zero.hom.app _) 2 (14,139,139-(4:ℕ))) nx]
+  change familyPageMap background.family (SyntheticCategory.biShift_zero.hom.app _) 2 (14,139,139-(4:ℕ))
+    (familyPageMap background.family ((SyntheticCategory.biShift (0,0)).map (background.nu.functor.map f))
+      2 (14,139,139-(4:ℕ)) nx) = _
+  rw [hn]
+  rfl
+
+theorem nu_lambda_four_infinity_nonzero (X : AdamsObject)
+    (x : (background.classical.obj (X.obj background.auxiliary)).Page 2 (14,139))
+    (hs : SurvivesTo (background.classical.obj (X.obj background.auxiliary)) 6 (14,139) x)
+    (e : ((background.family.nu background.nu (X.obj background.auxiliary)).sequence.ssData (14,139,135)).eInfty)
+    (he : HasInfinityRepresentative (background.family.nu background.nu (X.obj background.auxiliary)) 2
+      (14,139,135) (targetNuLabel background X 14 139 4 x) e) : e ≠ 0 := by
+  obtain ⟨hc,hp⟩ := (KIP126.Literature.Standard.eInfinity_nu_labels
+    X 14 139 135 (by decide) x e).mp he
+  intro hz
+  rw [hz,map_zero] at hp
+  have hb := (subquotientClass_eq_zero_iff _ _ ⟨x,hc⟩).mp hp.symm
+  change x ∈ boundaries background X 5 (14,139) at hb
+  obtain ⟨xr,hrep,hne⟩ := hs
+  have hzero : RepresentsOnPage (background.classical.obj (X.obj background.auxiliary)) 6 (14,139) x 0 :=
+    KIP126.ProofTools.representsOnPage_of_congruent background X (by decide)
+      (RepresentsOnPage.zero (by decide))
+      ⟨by decide, by simpa [KIP126.ProofTools.Ambient] using hb⟩
+  exact hne (FinitePageCalculus.represents_unique hrep hzero)
+
+end
+end KIP126.Main.Internal.Rigidity

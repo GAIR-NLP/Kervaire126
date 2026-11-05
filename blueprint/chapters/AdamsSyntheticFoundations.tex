@@ -1,0 +1,428 @@
+\section{Supplement: model categories and topological comparison}
+
+This section gives the model-category foundations of the stable
+background. Starting from the ordinary topological category, we obtain
+cofibers, suspension, triangles and tensor products from stable monoidal
+models. We then describe synthetic hypercompletion and the ordinary
+coproduct and homotopy-detection results. The arguments use the model and comparison hypotheses stated here,
+together with the earlier Adams convergence and page comparisons when invoked.
+
+To keep the ordinary and completed categories distinct, we continue to
+write $S_{\mathrm{ord}}$ and $H\mathbb F_{2,\mathrm{ord}}$ in the
+ordinary category. Replacing a localization by a locally small equivalent
+category may be done without changing its objects.
+
+\subsection*{Ordinary source and topological recognition}
+
+\begin{definition}[Ordinary models and their topological comparisons]
+\label{sem:AdamsSynthetic:ordinary-models}
+\label{sem:AdamsSynthetic:ordinary-source-recognition}
+\level{fine}
+Choose a locally small category $\mathrm{Sp}_{\mathrm{ord}}$ equivalent to the ordinary stable prespectrum localization, with the equivalence fixing objects. Fix a stable symmetric monoidal model, cofibers and coefficient spectrum for it. Likewise choose an ordinary synthetic category $\mathrm{Syn}_{\mathrm{ord}}$ with its stable model and analogue functor $\nu_{\mathrm{ord}}$. Retain the ordinary Hopf maps $\eta,\nu_3$, the pointed detector $D_{\mathrm{ord}}$ and its unit. The stable and tensor structures are constructed from these models; the classical cofiber choices follow from pretriangulation.
+The following comparisons identify the ordinary stable category with
+the stable homotopy category of prespectra.\par
+Let $\mathcal P$ be the category of sequential prespectra of
+based spaces. A based space is \emph{well-based} when its basepoint
+inclusion is closed and has the homotopy extension property; a
+prespectrum is well-based when every level is. Stable homotopy sets
+of prespectra are formed from cubical based maps, their homotopies, and
+the prespectrum structure maps.
+Let $W_\pi$ consist of maps inducing bijections on these stable homotopy
+sets in every integer degree, and write
+$Q_\pi\colon\mathcal P\to\mathcal P[W_\pi^{-1}]$.
+Fix the recognition equivalence
+\[
+ e\colon\mathcal P[W_\pi^{-1}]\simeq\mathrm{Sp}_{\mathrm{ord}}.
+\]
+It identifies the sphere prespectrum with $S_{\mathrm{ord}}$,
+desuspension with $\Sigma^{-1}$,
+and suspension of well-based prespectra with $\Sigma$.
+Its natural stable-homotopy identifications respect the cubical
+zero and addition and normalize the sphere identity to the positive
+source generator.
+
+The recognition also specifies a source coefficient prespectrum with
+zeroth stable homotopy coordinate $\mathbb F_2$ and vanishing stable
+homotopy in every nonzero degree. It identifies this prespectrum with
+$H\mathbb F_{2,\mathrm{ord}}$, compatibly with its zeroth homotopy
+coordinate and coefficient unit.
+This source is the ordinary stable localization; completion uses the
+separately specified $H\mathbb F_2$ localization.
+Call a based space \emph{good} if it is compactly generated, well-based
+and has based CW homotopy type. Assume also the following tensor and
+cofiber comparisons. For suspension spectra of good based spaces, the
+tensor agrees naturally with reduced smash and respects the sphere unit.
+For a map of well-based
+prespectra, the reduced mapping cone agrees with the chosen cofiber,
+including its inclusion and boundary. For arbitrary prespectra, use a
+specified good replacement and compare its diagonal smash naturally
+with the tensor. The unit normalization on suspension spectra is specified by the
+generator comparison above.
+\lean{KIP126.AdamsSynthetic.Ordinary.Spectrum,KIP126.AdamsSynthetic.Ordinary.SyntheticSpectrum,KIP126.AdamsSynthetic.Ordinary.spectrumModelPresentation,KIP126.AdamsSynthetic.Ordinary.syntheticModelPresentation,KIP126.AdamsSynthetic.Ordinary.spectrumCategory,KIP126.AdamsSynthetic.Ordinary.syntheticCategory,KIP126.AdamsSynthetic.Ordinary.spectrumCofiber,KIP126.AdamsSynthetic.Ordinary.coefficients,KIP126.AdamsSynthetic.Ordinary.nu,KIP126.AdamsSynthetic.Ordinary.auxiliary,KIP126.AdamsSynthetic.Ordinary.spectrumSourceEquivalence,KIP126.AdamsSynthetic.Ordinary.spectrumSourceEquivalence_obj,KIP126.AdamsSynthetic.Ordinary.syntheticSourceConstruction,KIP126.AdamsSynthetic.Ordinary.sourceComparison,KIP126.AdamsSynthetic.Ordinary.sourceGeneratorTensorRecognition,KIP126.AdamsSynthetic.Ordinary.sourceCofiberRecognition,KIP126.AdamsSynthetic.Ordinary.sourceDerivedSmashRecognition}
+\end{definition}
+
+
+\subsection*{Stable structures and cofiber triangles}
+
+
+\begin{definition}[Stable symmetric monoidal models]
+\label{sem:AdamsSynthetic:point-set-model}
+\level{coarse}
+\uses{sem:AdamsSynthetic:ordinary-source-recognition}
+Fix a pointed, complete, cocomplete, cofibrantly generated closed symmetric
+monoidal model category $\mathrm{Sp}_{ps}$ and a functor
+$L_{raw}\colon\mathrm{Sp}_{ps}\to\mathrm{Sp}_{raw}$ localizing its weak
+equivalences. Here $\mathrm{Sp}_{raw}$ is the $H\mathbb F_2$ localization, initially
+regarded only as a category. Assume that the derived suspension formed
+from the functorial model cofiber is an equivalence.
+
+The tensor satisfies the pushout-product axiom: the pushout-product of
+two cofibrations is a cofibration and is trivial if either factor is
+trivial. For every weak equivalence $q\colon Q\mathbf{1}\to\mathbf{1}$
+with cofibrant source and every cofibrant $X$, the map $q\otimes 1_X$
+is a weak equivalence. The following results derive the tensor
+comparisons, preadditivity, integer shifts and pretriangulation of the
+localized category from these assumptions.
+
+For the hypercomplete synthetic category, assume a
+pointed, complete, cocomplete, cofibrantly generated closed symmetric
+monoidal model $\mathrm{Syn}_{ps}$ with the same pushout-product and unit
+axioms, a weak-equivalence localization into that category, and equivalence
+of its derived suspension. Retain the additional synthetic grading
+functors, their composition, zero and integer-shift comparisons, full
+faithfulness, the natural transformation $\lambda$, and the objectwise
+shift--tensor comparisons. These grading and tensor comparisons refer to the structures derived
+from this model.
+\lean{KIP126.AdamsSynthetic.Completed.spectrumModelPresentation,KIP126.AdamsSynthetic.Completed.syntheticModelPresentation,KIP126.AdamsSynthetic.Completed.syntheticSourceModelPresentation}
+\end{definition}
+
+\begin{theorem}[Functorial and derived model cofibers]
+\label{sem:AdamsSynthetic:model-cofiber}
+\label{sem:AdamsSynthetic:derived-model-cofiber}
+\level{fine}
+\uses{sem:AdamsSynthetic:point-set-model}
+Let $\mathcal P$ be a pointed cofibrantly generated model category with
+the two small object arguments for its generating cofibrations and
+generating trivial cofibrations. There are functorial
+cofibration--trivial-fibration and trivial-cofibration--fibration
+factorizations. In particular, there is a cofibrant replacement functor
+$Q$ with a natural weak equivalence $QX\to X$.
+
+For an arrow $f\colon X\to Y$, factor $Qf$ as a cofibration
+$i_f\colon QX\to M_f$ followed by a trivial fibration $M_f\to QY$.
+The pushout
+\[
+ C_m(f)=M_f\amalg_{QX}0
+\]
+defines a functor $C_m\colon\operatorname{Arrow}(\mathcal P)\to\mathcal P$.
+Its values are cofibrant, and its inclusion $M_f\to C_m(f)$ is natural
+in strict commutative squares. Applied to the two models and
+followed by their localization functors, this gives the corresponding
+classical and synthetic model cofiber functors.
+
+Let $W$ denote the model weak equivalences, and let
+$L\colon\mathcal P\to\mathcal H$ localize $W$.
+The functor $C_m$ takes a commutative square whose two components lie
+in $W$ to a weak equivalence. Let $W_{\rm arrow}$ denote this class of
+squares and $Q_{\rm arrow}$ its localization functor. Then $C_m$ induces
+\[
+ \overline C_m\colon
+ \operatorname{Arrow}(\mathcal P)[W_{\rm arrow}^{-1}]
+ \longrightarrow\mathcal H,
+ \qquad \overline C_m Q_{\rm arrow}\cong LC_m.
+\]
+There is a natural cofiber inclusion $LY\to LC_m(f)$, obtained by
+inverting $L(M_f\to Y)$ and using the pushout inclusion. It descends
+to the same localization of arrows. If $L$ preserves zero morphisms,
+its composite with $L(f)$ is zero.
+\lean{KIP126.StableHomotopy.CofibrantGeneration.cofibrationTrivialFibrationFactorization,KIP126.StableHomotopy.CofibrantGeneration.trivialCofibrationFibrationFactorization,KIP126.StableHomotopy.CofibrantGeneration.cofibrantReplacementFunctor,KIP126.StableHomotopy.CofibrantGeneration.cofibrantReplacementCounit,KIP126.StableHomotopy.CofibrantGeneration.cofiberFunctor,KIP126.StableHomotopy.CofibrantGeneration.cofiberInclusion,KIP126.AdamsSynthetic.Completed.spectrumModelCofiber,KIP126.AdamsSynthetic.Completed.syntheticModelCofiber,KIP126.StableHomotopy.CofibrantGeneration.cofiberFunctor_weakEquivalences,KIP126.StableHomotopy.CofibrantGeneration.derivedCofiberFunctor,KIP126.StableHomotopy.CofibrantGeneration.derivedCofiberFunctorComparison,KIP126.StableHomotopy.CofibrantGeneration.localizedCofiberInclusion,KIP126.StableHomotopy.CofibrantGeneration.derivedCofiberInclusion,KIP126.StableHomotopy.CofibrantGeneration.localizedCofiberInclusion_comp}
+\end{theorem}
+\begin{proof}
+The small object arguments give the two functorial factorizations.
+Apply the first to $0\to X$ and then to $Qf$. Pushout functoriality
+gives the cofiber maps and their identity and composition laws.
+Cofibrations are closed under pushout and composition, so each
+$C_m(f)$ is cofibrant.
+
+Functorial replacement preserves componentwise weak equivalences by
+two-out-of-three. For cofibrant arrows, factor a componentwise weak
+equivalence through the relative cofibration construction and apply
+the model lifting axioms and pushout stability of trivial cofibrations.
+This proves homotopy invariance of the pushout cofiber. The universal
+property of localization then gives the derived functor and the
+descended inclusion. Naturality of the replacement comparison and
+the zero composite in the pushout give the asserted zero composite.
+\end{proof}
+
+
+\begin{theorem}[Model suspension, boundary and derived shifts]
+\label{sem:AdamsSynthetic:model-suspension}
+\label{sem:AdamsSynthetic:derived-model-suspension}
+\level{fine}
+\uses{sem:AdamsSynthetic:model-cofiber,sem:AdamsSynthetic:derived-model-cofiber}
+In the setting of the cofiber construction above, define
+$\Sigma_m X=C_m(X\to0)$. The strict square from
+$f\colon X\to Y$ to $X\to0$, with components $1_X$ and $Y\to0$,
+induces a natural map
+\[
+ \partial_f\colon C_m(f)\longrightarrow\Sigma_m X.
+\]
+Both suspension and this boundary use the same functorial replacement
+and pushout construction as $C_m$.
+
+The model suspension preserves weak equivalences and induces a functor
+$\overline\Sigma_m\colon\mathcal H\to\mathcal H$ with
+$\overline\Sigma_m L\cong L\Sigma_m$. The boundary descends to
+a natural transformation from $\overline C_m$ to the derived suspension
+of the source, on the localization of point-set arrows.
+
+The cofiber of an identity is zero after localization. For each
+$f\colon X\to Y$, the localized cofiber sequence
+\[
+ LX\xrightarrow{L(f)}LY\longrightarrow LC_m(f)
+ \xrightarrow{\partial_f}\overline\Sigma_m LX
+ \xrightarrow{\overline\Sigma_m L(f)}\overline\Sigma_m LY
+\]
+has zero composites of consecutive arrows.
+
+If this same derived suspension is an equivalence, it determines a
+coherent integer shift on $\mathcal H$, whose shift by one is naturally
+isomorphic to $\overline\Sigma_m$.
+\lean{KIP126.StableHomotopy.CofibrantGeneration.suspensionFunctor,KIP126.StableHomotopy.CofibrantGeneration.cofiberBoundary,KIP126.StableHomotopy.CofibrantGeneration.derivedSuspensionFunctor,KIP126.StableHomotopy.CofibrantGeneration.derivedCofiberBoundary,KIP126.StableHomotopy.CofibrantGeneration.localizedCofiberIdentity_isZero,KIP126.StableHomotopy.CofibrantGeneration.localizedCofiberInclusion_boundary_comp,KIP126.StableHomotopy.CofibrantGeneration.localizedCofiberBoundary_suspension_comp,KIP126.StableHomotopy.CofibrantGeneration.derivedSuspensionHasShift,KIP126.StableHomotopy.CofibrantGeneration.derivedSuspensionShiftOneIso}
+\end{theorem}
+\begin{proof}
+Homotopy invariance of the cofiber applied to $X\to0$ gives suspension
+invariance and hence its descent. The natural boundary descends by
+the fully faithful precomposition functor for localization.
+The point-set replacement of an identity is a weak equivalence and
+a cofibration, so its pushout cofiber is weakly equivalent to zero.
+Naturality gives the inclusion--boundary zero composite; the next
+composite factors through the cofiber of an identity.
+
+To construct all integer shifts from an autoequivalence, pass to a
+skeleton, where it becomes a strict automorphism. Its integer powers
+satisfy the group laws strictly. Transport this shift structure back
+along the skeleton equivalence, including its associativity and unit
+comparisons.
+\end{proof}
+
+\begin{theorem}[Identification of the model homotopy category]
+\label{sem:AdamsSynthetic:model-localization}
+\level{fine}
+\uses{sem:AdamsSynthetic:point-set-model}
+The localization $\mathrm{Sp}_{raw}$ is locally small relative to the
+size convention of the point-set model. Choose a category $\mathrm{Sp}$
+with small Hom sets and an equivalence
+$e\colon\mathrm{Sp}_{raw}\simeq\mathrm{Sp}$ that fixes objects. Set $L=e\circ L_{raw}$. The derived suspension remains an equivalence after transport to $L$.
+
+Let $W$ be the weak equivalences of $\mathrm{Sp}_{ps}$ and let
+$Q\colon\mathrm{Sp}_{ps}\to\mathrm{Sp}_{ps}[W^{-1}]$ be the canonical
+localization. There is a canonical equivalence
+\[
+ E\colon\mathrm{Sp}_{ps}[W^{-1}]\simeq\mathrm{Sp}
+\]
+and a natural isomorphism $E\circ Q\cong L$.
+\lean{KIP126.AdamsSynthetic.Completed.spectrumSourceEquivalence,KIP126.AdamsSynthetic.Completed.spectrumSourceEquivalence_obj,KIP126.AdamsSynthetic.Completed.spectrumHomotopyEquivalence,KIP126.AdamsSynthetic.Completed.spectrumLocalizationComparison}
+\end{theorem}
+\begin{proof}
+\uses{sem:AdamsSynthetic:point-set-model,sem:AdamsSynthetic:derived-model-suspension}
+Represent localization morphisms by maps between bifibrant replacements
+to obtain local smallness. Replacing each Hom set by a bijective small
+copy gives the equivalence $e$, with all objects fixed. Both derived suspension functors lift the same
+point-set suspension; the fully faithful precomposition functor for
+localization identifies them across $e$ and transports equivalence.
+Finally, both $Q$ and $L$ localize $W$, so the universal property supplies
+$E$ and the displayed comparison.
+\end{proof}
+
+
+\begin{theorem}[Lifting squares from the homotopy category]
+\label{sem:AdamsSynthetic:derived-arrow-full}
+\level{fine}
+\uses{sem:AdamsSynthetic:derived-model-cofiber}
+Let $L\colon\mathcal P\to\mathcal H$ be the localization of a model
+category at its weak equivalences $W$. Localizing point-set arrows at
+componentwise weak equivalences gives a comparison functor
+\[
+ \overline{\operatorname{Arr}(L)}\colon
+ \operatorname{Arr}(\mathcal P)[(W^{\mathrm{arr}})^{-1}]
+ \longrightarrow\operatorname{Arr}(\mathcal H),
+\]
+whose composite with the localization functor is naturally isomorphic
+to $\operatorname{Arr}(L)$. This comparison is full.
+\lean{KIP126.StableHomotopy.ModelFoundation.derivedArrowFunctor,KIP126.StableHomotopy.ModelFoundation.derivedArrowComparison,KIP126.StableHomotopy.ModelFoundation.derivedArrowFunctor_full}
+\end{theorem}
+\begin{proof}
+Use bifibrant replacements to represent the two endpoint maps. Equality
+of the resulting composites in the localization is represented by a
+homotopy. A cylinder and a lifting argument replace this homotopy-commuting
+square by a strictly commuting square after a componentwise weak
+equivalence. Its localized square is the required preimage.
+\end{proof}
+
+\begin{theorem}[Model cofiber triangles and their morphisms]
+\label{sem:AdamsSynthetic:model-cofiber-triangles}
+\label{sem:AdamsSynthetic:model-cofiber-tr1-tr3}
+\level{fine}
+\uses{sem:AdamsSynthetic:derived-model-suspension,sem:AdamsSynthetic:derived-arrow-full}
+Assume that the derived suspension $\overline\Sigma_m$ is an
+equivalence and equip $\mathcal H$ with its induced integer shift.
+The localized model cofiber sequence, with its boundary, defines
+a functor from $\operatorname{Arr}(\mathcal P)$ to triangles in
+$\mathcal H$. It descends to the localization of point-set arrows.
+Let $\mathcal D_m$ be the isomorphism closure of these triangles.
+
+This class is closed under isomorphisms. Every morphism
+of $\mathcal H$ extends to a triangle in $\mathcal D_m$, and every
+commutative square between the first maps of two such triangles extends
+to a morphism of those same triangles. If $\mathcal H$ is equipped
+with zero morphisms and a zero object, its contractible triangles
+belong to $\mathcal D_m$.
+\lean{KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangleFunctor,KIP126.StableHomotopy.CofibrantGeneration.derivedCofiberTriangleFunctor,KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangles,KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangles_isomorphic,KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangles_cocone,KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangles_complete_morphism,KIP126.StableHomotopy.CofibrantGeneration.modelCofiberTriangles_contractible}
+\end{theorem}
+\begin{proof}
+Represent a morphism by a point-set arrow up to isomorphism.
+Its model cofiber gives the required triangle. Fullness of the arrow
+comparison lifts a square to the localized point-set arrow category;
+the derived triangle functor then supplies its third component and
+both remaining commutativities. The zero cofiber of an identity gives
+the contractible triangles. Isomorphism closure transports each
+construction to the stated class.
+\end{proof}
+
+
+\begin{theorem}[Pretriangulation from the stable model]
+\label{sem:AdamsSynthetic:model-pretriangulation}
+\level{fine}
+\uses{sem:AdamsSynthetic:model-cofiber-tr1-tr3,sem:AdamsSynthetic:derived-model-suspension}
+Let $\mathcal P$ be a pointed cofibrantly generated model category,
+let $L\colon\mathcal P\to\mathcal H$ be its weak-equivalence localization,
+and assume that the derived suspension constructed above is an
+equivalence. Then $\mathcal H$ has a preadditive structure, additive
+integer shifts, and a pretriangulated structure whose distinguished
+triangles are exactly $\mathcal D_m$. Both directions of the rotation
+axiom hold with the model boundary and the negative of the shifted
+first map.
+\lean{KIP126.StableHomotopy.CofibrantGeneration.modelPreadditive,KIP126.StableHomotopy.CofibrantGeneration.modelShiftAdditive,KIP126.StableHomotopy.CofibrantGeneration.modelPretriangulated,KIP126.StableHomotopy.CofibrantGeneration.modelPretriangulated_distinguished}
+\end{theorem}
+\begin{proof}
+\uses{sem:AdamsSynthetic:model-cofiber-tr1-tr3,sem:AdamsSynthetic:derived-model-suspension}
+The localized coproduct of cofibrant objects supplies a pinch map on the
+model suspension. Its two counits give addition, and reflection
+of the cylinder gives inverses. Stability transports these operations to
+all objects of $\mathcal H$, producing the preadditive structure and
+additive shifts. The double mapping cone identifies the forward
+rotation of a cofiber triangle; the endpoint reflection gives
+the required minus sign. The triangle morphism axiom then gives
+exactness of the represented Hom sequences. Applying the five-lemma
+argument to suitable triangle morphisms proves the reverse rotation.
+The already constructed contractible triangles, cocones, isomorphism
+closure, and triangle morphisms complete the pretriangulated axioms.
+\end{proof}
+
+\begin{theorem}[Tensor structure on the model localization]
+\label{sem:AdamsSynthetic:model-derived-tensor}
+\level{fine}
+\uses{sem:AdamsSynthetic:point-set-model}
+Let $\mathcal P$ be a cofibrantly generated closed symmetric monoidal model
+category satisfying the pushout-product and unit axioms, and let
+$L\colon\mathcal P\to\mathcal H$ localize its weak equivalences. There is
+a symmetric monoidal structure on this same category $\mathcal H$.
+For cofibrant $X,Y$ there are natural isomorphisms
+$L(X\otimes Y)\cong L(X)\otimes L(Y)$; for arbitrary $X,Y$ there are
+natural isomorphisms
+\[
+ L(X)\otimes L(Y)\cong L(QX\otimes QY).
+\]
+Its unit is $L(Q\mathbf 1)$. Every weak equivalence
+$q\colon U\to\mathbf 1$ gives an isomorphism $L(U)\cong\mathbf 1_{\mathcal H}$.
+\lean{KIP126.StableHomotopy.CofibrantGeneration.derivedMonoidalCategory,KIP126.StableHomotopy.CofibrantGeneration.derivedSymmetricCategory,KIP126.StableHomotopy.CofibrantGeneration.derivedTensorComparison,KIP126.StableHomotopy.CofibrantGeneration.derivedTensorComparison_naturality,KIP126.StableHomotopy.CofibrantGeneration.derivedTensorReplacementComparison,KIP126.StableHomotopy.CofibrantGeneration.derivedTensorReplacementComparison_naturality,KIP126.StableHomotopy.CofibrantGeneration.derivedUnitComparison,KIP126.StableHomotopy.CofibrantGeneration.derivedUnitComparisonOfWeakEquivalence}
+\end{theorem}
+\begin{proof}
+\uses{sem:AdamsSynthetic:model-cofiber}
+Take the full subcategory of objects that are cofibrant or isomorphic
+to the tensor unit. The pushout-product axiom makes it closed under
+tensor. Brown's lemma and the unit axiom imply that its weak
+equivalences are preserved by tensoring with any object of this
+subcategory, including a possibly noncofibrant unit. Cofibrant replacement
+and its weak-equivalence counit show that its inclusion followed by
+$L$ is still a localization. Monoidal localization constructs the tensor,
+associators, unitors and symmetry on $\mathcal H$ with their coherence.
+The monoidal comparison gives the cofibrant formula; the replacement
+counits give the arbitrary-object formula and its naturality.
+\end{proof}
+
+
+\subsection*{Synthetic hypercompletion}
+
+\begin{definition}[Synthetic hypercompletion]
+\label{sem:AdamsSynthetic:synthetic-completion}
+\level{coarse}
+For hypercompletion, see \cite{Pst}, Definition 5.1, Remark 5.5 and Propositions 5.6--5.7.\par
+\uses{sem:AdamsSynthetic:completed-background,sem:AdamsSynthetic:nu,sem:AdamsSynthetic:point-set-model}
+Invert the ordinary synthetic maps $f$ for which $\nu_{\mathrm{ord}}H\mathbb F_2\otimes f$ is invertible. Choose a locally small equivalent category for this localization and let $K:\mathrm{Syn}_{\mathrm{ord}}\to\mathrm{Syn}$ be the resulting functor. The localized stable model supplies its stable structure and bigrading. Assume that $K$ preserves the unit, tensor and bidegree shifts, commutes
+with $\lambda$, and satisfies $K\nu_{\mathrm{ord}}\cong\nu L_2$
+compatibly with the sphere units. Lambda inversion then recovers
+$\mathrm{Sp}_{H\mathbb F_2}$.
+\lean{KIP126.AdamsSynthetic.Completed.syntheticHF2Equivalences,KIP126.AdamsSynthetic.Completed.CompletedSyntheticSource,KIP126.AdamsSynthetic.Completed.syntheticSourceEquivalence,KIP126.AdamsSynthetic.Completed.syntheticCompletion,KIP126.AdamsSynthetic.Completed.syntheticCompletionMonoidal,KIP126.AdamsSynthetic.Completed.syntheticCompletionSphereIso,KIP126.AdamsSynthetic.Completed.syntheticCompletionTensorIso,KIP126.AdamsSynthetic.Completed.nuCompletionIso,KIP126.AdamsSynthetic.Completed.nuCompletion_unit,KIP126.AdamsSynthetic.Completed.syntheticCompletionShiftIso,KIP126.AdamsSynthetic.Completed.syntheticCompletion_lambda,KIP126.AdamsSynthetic.Completed.syntheticCompletionConstruction}
+\end{definition}
+
+\subsection*{Coproducts and homotopy detection}
+
+\begin{theorem}[Small coproducts and their homotopy groups]
+\label{sem:AdamsSynthetic:sphere-coproducts}
+\label{sem:AdamsSynthetic:homotopy-small-coproducts}
+\level{fine}
+\uses{sem:AdamsSynthetic:ordinary-source-recognition}
+The category $\mathrm{Sp}_{\mathrm{ord}}$ admits all small coproducts.
+For every small family $(X_j)_{j\in J}$ and every $n\in\mathbb Z$,
+the coproduct inclusions induce an isomorphism
+\[
+ \bigoplus_{j\in J}\pi_nX_j\xrightarrow{\ \cong\ }
+       \pi_n\Bigl(\coprod_{j\in J}X_j\Bigr).
+\]
+Equivalently, the functor
+$[S_{\mathrm{ord}}^n,-]$ preserves small coproducts, independently of
+the chosen coproduct objects. In particular, if
+$\pi_nS_{\mathrm{ord}}=0$ for $n\le-1$, then every small coproduct
+of copies of $S_{\mathrm{ord}}$ has zero homotopy in those degrees.
+\lean{KIP126.AdamsSynthetic.Ordinary.smallSphereCoproduct,KIP126.AdamsSynthetic.Ordinary.smallSphereCoproduct_homotopy_vanishes,KIP126.AdamsSynthetic.Ordinary.smallSpectrumCoproducts,KIP126.AdamsSynthetic.Ordinary.homotopy_preserves_smallCoproduct}
+\end{theorem}
+\begin{proof}
+Represent the spectra in the prespectrum localization. Cubical
+replacement supplies cofibrant representatives with $T_1$ levels;
+their strict wedge is a coproduct in the localization with its original
+branch maps. Compact cubical representatives meet only finitely many
+non-basepoint branches, so every stable homotopy element factors through
+a finite subwedge. The recognition comparison preserves these
+inclusions and factorizations. For sphere summands, the sphere
+prespectrum is already free on its based zero level and has the cubical
+lifting property, giving the same construction directly.
+
+Finite coproducts in the preadditive category are biproducts.
+Finite support therefore makes the displayed map surjective, and the
+projections onto individual branches make it injective. This identifies
+the mapped coproduct diagram with the direct-sum diagram in abelian
+groups and proves the assertion for every colimit choice. Applying it
+to a family of spheres gives the vanishing statement.
+\end{proof}
+
+\begin{theorem}[Homotopy detects ordinary spectrum isomorphisms]
+\label{sem:AdamsSynthetic:homotopy-detects-isomorphisms}
+\level{fine}
+\uses{sem:AdamsSynthetic:ordinary-source-recognition,sem:AdamsSynthetic:ordinary-models}
+Let $f\colon X\to Y$ be a map of ordinary spectra.
+If $\pi_n(f)$ is bijective for every integer $n$, then $f$ is an
+isomorphism in $\mathrm{Sp}_{\mathrm{ord}}$.
+\lean{KIP126.AdamsSynthetic.Ordinary.isIso_of_homotopy_bijective}
+\end{theorem}
+\begin{proof}
+\uses{sem:AdamsSynthetic:ordinary-source-recognition,sem:AdamsSynthetic:ordinary-models}
+Complete $f$ to its distinguished cofiber triangle.
+Its homotopy exact sequence and the shift adjunction show that the
+cofiber has zero homotopy in every integer degree. Choose a prespectrum
+representative of that cofiber. Its constant based map to zero is a
+stable equivalence and therefore an isomorphism after localization.
+Recognition makes the cofiber zero. Exactness of the distinguished
+triangle then makes $f$ an isomorphism.
+\end{proof}

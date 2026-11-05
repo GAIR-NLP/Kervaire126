@@ -1,0 +1,8 @@
+blueprint: blueprint/content.tex
+lean: [KIP126]
+site:
+  title: Kervaire126
+  subtitle: From spectral sequences to geometry
+  accent: '#4938d1'
+  map: true
+  graph_progress: local

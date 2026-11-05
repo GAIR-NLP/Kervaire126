@@ -1,0 +1,21 @@
+module
+import all KIP126.AdamsSynthetic.Internal.ClassicalModel.Prespectrum
+import all KIP126.AdamsSynthetic.Internal.ClassicalModel.Sphere
+import all KIP126.AdamsSynthetic.Internal.HInjective.PrespectrumConstruction.Prespectrum.Loop.Data
+
+@[expose] section
+
+namespace KIP126.AdamsSynthetic.Source.Prespectrum
+open Topology
+open scoped unitInterval
+
+/-- Insert the last coordinate continuously into an actual cube. -/
+theorem continuous_cube_snoc (r : ℕ) :
+    Continuous (fun z : (Fin r → I) × I => (Fin.snoc z.1 z.2 : Fin (r+1) → I)) := by
+  apply continuous_pi
+  intro i
+  induction i using Fin.lastCases with
+  | last => simp only [Fin.snoc_last]; fun_prop
+  | cast j => simp only [Fin.snoc_castSucc]; fun_prop
+
+end KIP126.AdamsSynthetic.Source.Prespectrum

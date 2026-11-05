@@ -1,0 +1,59 @@
+module
+import all KIP126.Main.SectionSeven.Predicates
+public import KIP126.ProofTools.Operations
+import all KIP126.Main.Internal.NuThree.Mahowald
+import all KIP126.Main.Internal.NuThree.ActualOperations
+import all KIP126.Main.Internal.NuThree.Finite
+import all KIP126.Main.Internal.QuotientCalculus
+import all KIP126.Main.SectionSeven.WeakInitialNonzero
+/-! The strict map and nonzero target in the specified normalized Cν triangle. -/
+@[expose] section
+namespace KIP126.Main.Internal.NuThree
+open CategoryTheory CategoryTheory.Limits KIP126.StableHomotopy
+open KIP126.Synthetic.Context KIP126.Synthetic.SpectralSequence KIP126.AdamsSynthetic
+open KIP126.Core.SpectralSequence KIP126.Core.SpectralSequence.FinitePageCalculus
+open KIP126.Kervaire.Route KIP126.Literature KIP126.ProofTools
+open KIP126.AdamsSynthetic.Completed (background Spectrum SyntheticSpectrum)
+open KIP126.ProofTools.Internal KIP126.ProofTools.Internal.Mahowald KIP126.Main.Internal KIP126.Main.SectionSeven
+open KIP126.Main.SectionSeven.Internal
+noncomputable section
+set_option backward.isDefEq.respectTransparency false
+set_option maxRecDepth 10000
+set_option maxHeartbeats 1600000
+private theorem nu_three_actual_map_relation :
+    ∃ (a : BiHom 125 134 (XModLambdaN (Smn (Syn:=SyntheticSpectrum) 3 4) 3))
+      (b : BiHom 125 134 (XModLambdaN (S_0_0:SyntheticSpectrum) 3)),
+      a≫XModLambdaN.map (normalizedNu background KIP126.Literature.Standard.nuCofiber_nu_exponent) 3=b ∧
+      FiniteDetected 3 (by decide) 11 136 2 KIP126.Computation.Standard.Y b := by
+  obtain ⟨x,y',⟨W⟩,hy'⟩ := nu_finite_extension_congruent_Y
+  have hw := nu_finite_extension_actual_relation x y' W
+  obtain ⟨a,b,hab,hb⟩ := nu_relation_weight_transport _ _ _
+    KIP126.Literature.Standard.nuCofiber_nu_exponent W.length_lower y' hw
+  obtain ⟨et,het,bt,hbt,hgr⟩ := hb
+  have hbY : Detects (background.convergence (.quotient 3 (.nu .sphere))) (11,136,134)
+      (finiteTargetLabel background .sphere 3 11 136 2 KIP126.Computation.Standard.Y) b :=
+    ⟨et,(q3_target_boundary_congruent _ _ hy' et).mp het,bt,hbt,hgr⟩
+  let S := (SyntheticCategory.biShift
+      (0,(normalizedExponent background.classicalTower background.auxiliary.nuMap:ℤ))).obj
+      (background.nu.functor.obj (Sphere (C:=Spectrum) 3))
+  let e : S≅Smn (Syn:=SyntheticSpectrum) 3 4 := by
+    dsimp only [S]
+    rw [KIP126.Literature.Standard.nuCofiber_nu_exponent]
+    exact (SyntheticCategory.biShift (0,1)).mapIso (nuSphereThree background) ≪≫
+      (SyntheticCategory.biShift_comp (3,3) (0,1)).app S_0_0
+  let Q := background.quotients.functoriality.functor 3
+  refine ⟨a≫(Q.mapIso e).hom,b≫(Q.mapIso background.nu.unitIso).hom,?_,?_⟩
+  · refine (q3_nu_map_normalization KIP126.Literature.Standard.nuCofiber_nu_exponent a).symm.trans ?_
+    simpa only [Category.assoc] using
+      (congrArg (fun z=>z≫(Q.mapIso background.nu.unitIso).hom) hab)
+  · have hh := detects_map (.quotient 3 (.nu .sphere)) (.quotient 3 .sphere)
+      (Q.mapIso background.nu.unitIso).hom (11,136,134) _ b hbY
+    have hl := sphere_quotient_label_from_nu 3 2 11 136 KIP126.Computation.Standard.Y
+    change familyPageMap background.family (Q.mapIso background.nu.unitIso).hom 2 (11,136,134) _=_ at hl
+    have hfinal := (congrArg (fun z : (background.family.obj (XModLambdaN (S_0_0:SyntheticSpectrum) 3)).E₂ (11,136,134)=>
+      Detects (background.convergence (.quotient 3 .sphere)) (11,136,134) z
+        (b≫(Q.mapIso background.nu.unitIso).hom)) hl).mp hh
+    exact nu_three_y_nonzero _ hfinal
+
+end
+end KIP126.Main.Internal.NuThree

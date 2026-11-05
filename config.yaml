@@ -1,0 +1,18 @@
+title: Kervaire126
+subtitle: A mathematical blueprint for the last Kervaire invariant problem
+overview: site/overview.md
+tabs:
+  - id: proof-map
+    label: Proof Map
+    content: site/proof-map-tab.html
+projects:
+  - name: Kervaire126
+    root: Kervaire126
+    author: SII-Kervaire126
+    book_title: Kervaire invariant one in dimension 126
+    tag: Lean 4
+    image: site/assets/kervaire126-cover.webp
+    image_alt: Interlocking indigo surfaces inspired by topology
+    image_fit: cover
+    image_offset: 50
+    blurb: Spectral sequences, synthetic homotopy theory and the dimension-126 argument.
