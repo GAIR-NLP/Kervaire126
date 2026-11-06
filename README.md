@@ -15,6 +15,8 @@
   <a href="https://arxiv.org/abs/2412.10879v2"><i>On the Last Kervaire Invariant Problem</i></a>.
 </p>
 
+**Project blog coming soon.**
+
 **Formalization status:** Foundational constructions, comparisons and
 computational certifications include `sorry` placeholders.
 
